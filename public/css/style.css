@@ -1,0 +1,178 @@
+/* Font Face*/
+@font-face {
+    font-family: 'Montserrat';
+    src: url('fonts/monsterrat/Montserrat-Black.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'Carlito';
+    src: url('fonts/carlito.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'Arial';
+    src: url('fonts/arial.ttf') format('truetype');
+    font-weight: bold;
+  } 
+  @font-face {
+    font-family: 'TimesRoman';
+    src: url('fonts/times-new-roman.ttf') format('truetype');
+    font-weight: bold;
+  }
+
+*{
+    margin: 0;
+    padding: 0;
+}
+  
+.containers{
+    margin: 70px;
+}
+.containers{
+    margin-bottom: 0;
+}
+.logo{
+    position: relative;
+}
+.logo span{
+    position: absolute;
+    top: 55px;
+    left: 10px;
+    font-size: 12px;
+    font-family: 'TimesRoman' !important;
+    font-weight: 700;
+}
+
+.lloyds{
+    position: relative;
+}
+.lloyds img{
+    margin: 0;
+}
+.lloyds span{
+    position: absolute;
+    top: 40px;
+    right: 8px;
+}
+.barcode{
+    position: absolute;
+    top: 100px;
+    right: 290px;
+}
+.certificates{
+    padding-top: 100px;
+    margin-bottom: 20px;
+}
+.confermation{
+    font-family: 'Arial', sans-serif !important;
+    font-size: 18px;
+    color: #000;
+    text-align: center;
+    padding-bottom: -10px;
+    font-weight: bold;
+}
+.travels{
+    font-size: 12px;
+    font-weight: bold;
+    padding-top: -10px;
+}
+.description p{
+    font-size: 12px;
+    text-align: justify;
+    font-family: 'Arial', sans-serif !important;
+    line-height: 15px;
+   
+}
+.ins-info{
+    margin-top: 35px;
+    margin-bottom: 20px;
+}
+.ins-info p{
+    font-family: 'TimesRoman' !important;
+    font-size: 13px;
+    color: #000;
+    margin: 0;
+    padding: 0;
+    line-height: 15px;
+}
+.ins-info p span{
+    font-weight: 500;
+}
+.pass-info{
+    margin: 20px;
+}
+.col-4{
+    flex: 0 0 300px;
+    max-width: 33%;
+}
+.tables{
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+}
+.tables thead th {
+	font-size: 13px;
+    font-family: 'TimesRoman' !important;
+}
+.tables tbody td{
+	font-size: 13px;
+    font-family: 'TimesRoman' !important;
+}
+
+.title-line{
+    background-color: #e5e5e5;
+}
+.title-line span{
+    font-size: 14px;
+    font-family: 'Arial', sans-serif !important;
+    font-weight: 700;
+    align-items: center;
+}
+.ins-content{
+    margin: 0;
+    padding: 0;
+}
+.ins-content ul li{
+    list-style: none;
+    display: inline-block;
+    text-align: center;
+}
+.ins-footer{
+    margin-top: 10px;
+    margin-bottom: 10px;
+ }
+.ins-footer{
+    font-size: 9px;
+    margin: 0;
+    padding: 0;
+}
+.line{
+    border: 0.4px solid #000;
+    margin: 25px 0;
+}
+
+
+
+
+
+
+.certificate p{
+    font-size: 16px;
+    font-family: 'Caveat', cursive !important;
+    font-weight: 300;
+}
+
+
+
+
+
+.travel {
+          font-family: 'Montserrat', cursive !important;
+          font-size: 30px;
+      }
+      .signatur {
+          font-family: 'Caveat', cursive !important;
+          font-size: 30px;
+      }
+      .bn {
+        font-family: 'CharukolaUltraLight', sans-serif;
+          font-size: 30px;
+      }

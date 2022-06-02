@@ -1,0 +1,6 @@
+[19-Jan-2022 17:23:30 Asia/Dhaka] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1040] Too many connections in /home/narcissus/travellerschoice.xyz/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:70
+Stack trace:
+#0 /home/narcissus/travellerschoice.xyz/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(70): PDO->__construct('mysql:host=127....', 'narcissus_misba...', 'Kazi6029', Array)
+#1 /home/narcissus/travellerschoice.xyz/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(46): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=127....', 'narcissus_misba...', 'Kazi6029', Array)
+#2 /home/narcissus/travellerschoice.xyz/vendor/laravel/framework/src/Illuminate/Database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=127....', Array, Array)
+#3 /home/narcissus/travellerschoice.xyz/vendor/laravel/framework/src/Illuminate/Database/Connectors/ConnectionFactory.php(184): Illuminate\Database\Connectors\MySqlC in /home/narcissus/travellerschoice.xyz/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 703

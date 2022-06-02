@@ -1,0 +1,234 @@
+/* Header */
+.full-width-header .rs-header.style3 .menu-area {
+    padding: 0;
+}
+.full-width-header .rs-header .menu-area.sticky .logo-area a .normal-logo {
+	display: none;
+}
+.full-width-header .rs-header .menu-area .logo-area img {
+	transition: 0.4s;
+	-webkit-transition: 0.4s;
+	max-height: 60px;
+}
+.full-width-header .rs-header .menu-area.sticky .logo-area {
+	top: 0;
+}
+.full-width-header .rs-header .menu-area.sticky .logo-area a .sticky-logo {
+	display: block;
+	max-height: 50px;
+}
+.full-width-header .rs-header .menu-area .rs-menu-area {
+	display: flex;
+	width: 100%;
+	position: relative;
+	align-items: center;
+	justify-content: flex-end;
+}
+.traveller-header{
+    padding: 5px 0;
+}
+
+/**** Travel Ins****/
+.rs-travelform-wrap.style2 .rs-requset {
+	padding: 60px 60px 60px 60px;
+}
+
+.rs-travelform-wrap .rs-requset .from-control {
+	width: 100%;
+	max-width: 100%;
+	opacity: 1;
+	padding: 10px 18px;
+	border: 1px solid #F1F5FB;
+	box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
+.sec-title2 .title {
+	max-width: 550px;
+}
+.from-control.select2 {
+	background: #fff;
+	padding: 13px 18px !important;
+}
+
+/** Dashboard***/
+.rs-team-Single .btm-info-team .images-part {
+	text-align: center;
+}
+.rs-team-Single .btm-info-team .images-part img {
+	max-width: 120px;
+}
+
+.rs-team-Single .btm-info-team .con-info .title {
+	font-size: 25px;
+	line-height: 40px;
+	text-align: center;
+	margin: 0;
+}
+.rs-team-Single .btm-info-team .con-info .designation-info {
+	font-size: 14px;
+	line-height: 20px;
+	text-align: center;
+}
+.rs-team-Single .btm-info-team {
+	position: relative;
+	box-shadow: 0px 0px 32px 0px rgba(7, 28, 31, 0.05);
+	background: #fff;
+	margin-bottom: 70px;
+	padding: 0;
+}
+.rs-team-Single .btm-info-team .images-part {
+	padding: 20px 0;
+}
+
+.dash-info{
+	padding: 20px 20px;
+}
+.purchase-list{
+	padding: 20px 20px;
+}
+.purchase-list{
+	max-width: 100% !important;
+	padding-left: -10px; 
+}
+
+.purchase-list .table thead th{
+	border: 0;
+	font-size: 13px;
+}
+.purchase-list .table thead tr{
+	
+}
+.purchase-list .table tbody td{
+	border: 0;
+	font-size: 13px;
+}
+
+.table-striped tbody tr:nth-of-type(2n+1) {
+	background-color: #fff;
+}
+.table-bordered {
+	border: 0;
+}
+.table td,
+.table th{
+    border-bottom: 1px solid #ddd !important;
+}
+.purchase-list{
+	position: relative;
+}
+.purchase-list h2{
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	font-size: 22px;
+}
+table.dataTable th,
+        table.dataTable td {
+            white-space: nowrap;
+        }
+/**Dashbaord Menu**/
+.sidebar {
+	padding: 25px 0;
+}
+.sidebar .user-menu {
+	position: relative;
+	padding: 0 20px;
+}
+.sidebar .user-menu li a:hover i,
+.sidebar .user-menu .active i{
+	color: rgb(255, 81, 0);
+	transition: all .5s ease;
+}
+
+.sidebar .user-menu li .active{
+	color: #000;
+}
+.navbar .nav-item .nav-link:hover::before{
+    transform: scale(1);
+ }
+.sidebar .user-menu li i{
+	margin-right: 10px;
+}
+.sidebar .user-menu li{
+	font-size: 16px;
+	padding: 7px 0;
+	text-transform: capitalize;
+	font-weight: 500;
+}
+.sidebar .user-menu li a{
+	color: rgb(132, 132, 132);
+	display: block;
+	position: relative;
+}
+.sidebar .user-menu li a::before{
+	content: '';
+	position: absolute;
+	width: 2px;
+	height: 100%;
+	top: 0;
+	left: -20px;
+	background-color: #03228f ;
+	transition: all 0.5s ease;
+    transform: scale(0);
+}
+.sidebar .user-menu li .active::before,
+.sidebar .user-menu li a:hover::before{
+    transform: scale(1);
+ }
+.sidebar .user-menu li a:hover{
+	color: #000;
+}
+.sidebar .user-menu{}
+
+
+/** User Profile **/
+.user-profile{
+	padding: 50px;
+}
+.user-profile .from-control {
+	width: 100%;
+	max-width: 100%;
+	opacity: 1;
+	padding: 10px 18px;
+	border: 1px solid #F1F5FB;
+	box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
+.submit {
+	color: #FFFFFF;
+	background-color: transparent;
+	background-image: linear-gradient(95deg, #03228f 0%, #4e95ed 100%);
+	padding: 18px 40px 17px 40px;
+	font-size: 15px;
+	line-height: 1;
+	border-radius: 30px 30px 30px 30px;
+	border: none;
+	transition: all .5s ease;
+}
+.submit:hover {
+	opacity: 0.99;
+	transition: all .5s ease;
+  }
+/**Table**/
+
+.dataTables_filter {
+	float:right;
+	margin-bottom: 1em;
+	
+	&:after {
+	  clear:both;
+	}
+  }
+  
+  .dt-buttons a .glyphicon {
+	visibility: hidden;
+  }
+
+
+
+@media only screen and (max-width: 991px) {
+	.full-width-header .rs-header .menu-area .logo-area a img {
+		display: none;
+	}
+	.purchase-list h2{
+		display: none;
+	}
+}
