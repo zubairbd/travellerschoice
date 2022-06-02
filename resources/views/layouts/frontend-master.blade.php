@@ -162,7 +162,7 @@
         <script src="{{asset('frontend')}}/assets/js/scrollIt.min.js"></script>
         <!-- main js -->
         <script src="{{asset('frontend')}}/assets/js/main.js"></script>
-        <script type='text/javascript'> 
+        {{-- <script type='text/javascript'> 
             document.addEventListener('contextmenu', event => event.preventDefault()); 
             document.onkeydown = function(e) {
             var message='Content is protected\nYou cannot view the page.';
@@ -185,7 +185,7 @@
                 return true;
                 }
             });
-        </script>
+        </script> --}}
 
         @yield('scripts')
     </body>
