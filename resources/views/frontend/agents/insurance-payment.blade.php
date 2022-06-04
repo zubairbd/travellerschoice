@@ -25,7 +25,9 @@
             {{ session('success') }}
         @endif
     </div>
+    
     @endif
+    
     <!-- Content Row -->
     <div class="row">
 
