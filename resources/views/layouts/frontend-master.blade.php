@@ -4,7 +4,7 @@
         <!-- meta tag -->
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <title>Travellers Choice - Travel Destination Management</title>
+        <title>Travellers Choice - @yield('title', 'Travel Destination Management')</title>
         <meta name="description" content="">
         <!-- responsive tag -->
         <meta http-equiv="x-ua-compatible" content="ie=edge">

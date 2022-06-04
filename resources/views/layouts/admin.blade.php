@@ -109,6 +109,7 @@
           <li class="{{$users}}"><a href="{{url('/admin/users')}}" title="Users"><i class="fa fa-users"></i> <span>Users</span></a></li>
           <li class="{{$pass}}"><a href="{{url('/admin/passengers')}}" title="Orders Completed"><i class="fa fa-users"></i> <span>Orders Completed</span></a></li>
           <li class="@yield('pandingord')"><a href="{{url('/admin/pandingorders')}}" title="Panding Orders"><i class="fa fa-users"></i> <span>Panding Orders</span></a></li>
+          <li class="@yield('wallets')"><a href="{{url('/admin/wallets')}}" title="Wallets"><i class="fa fa-users"></i> <span>Wallets</span></a></li>
           <li class="{{$pay}}"><a href="{{url('/admin/payments')}}" title="Payments"><i class="fa fa-users"></i> <span>Payments</span></a></li>
           <li class="{{$ins}}"><a href="{{url('/admin/insurances')}}" title="Policy"><i class="fa fa-users"></i> <span>Policy</span></a></li>
       

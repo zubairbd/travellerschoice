@@ -9,7 +9,7 @@ class Payment extends Model
 {
     use HasFactory;
 
-    public $fillable = ['passenger_id', 'account_number', 'payment_type'];
+    public $fillable = ['passenger_id', 'account_number', 'payment_type', 'amount', 'user_id'];
 
 
     public function passenger() {

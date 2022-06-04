@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -70,5 +71,28 @@ class RegisterController extends Controller
             'role' => 'U',
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+
+    public function agentRegistration(){
+        return view('auth.agent-register');
+    }
+    
+    public function agentRegistrationSubmit(Request $request){
+
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|unique:users',
+            'password' => 'required|min:4|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->password),
+            'role'=> 'AG',
+        ]);
+
+        return back()->with('added', 'Passenger has been added');
     }
 }

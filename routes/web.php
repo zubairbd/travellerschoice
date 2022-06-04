@@ -57,6 +57,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
 
     Route::post('/passengers/destroy', [\App\Http\Controllers\DestroyAllController::class, 'AllPassengerDestroy']);
     Route::post('/passengers/download', [\App\Http\Controllers\DestroyAllController::class, 'AllPassengerDownload']);
+
+
+    Route::get('/wallets',  [\App\Http\Controllers\WalletsController::class, 'walletsIndex'])->name('wallets.index');
+    Route::get('/wallets/status/{id}/{s}',  [\App\Http\Controllers\WalletsController::class, 'walletsStatus']);
+    Route::get('/wallets/edit/{id}',  [\App\Http\Controllers\WalletsController::class, 'walletsEdit'])->name('wallets.edit');
 });
 
 // User Route
@@ -83,9 +88,23 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => ['auth', 'use
 });
 
 
+Route::get('/agent-registration', [\App\Http\Controllers\Auth\RegisterController::class, 'agentRegistration'])->name('agent.registration');
+Route::POST('/agent-registration/submit', [\App\Http\Controllers\Auth\RegisterController::class, 'agentRegistrationSubmit'])->name('agent.registration.submit');
 
 // Agent Route
 Route::group(['prefix' => 'agent', 'as' => 'agent.', 'middleware' => ['auth', 'agent']], function () {
     Route::get('/dashboard', [\App\Http\Controllers\Agent\DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/insurance-list', [\App\Http\Controllers\Agent\DashboardController::class, 'insuranceList'])->name('insurance.list');
+    Route::get('/insurance-create', [\App\Http\Controllers\Agent\DashboardController::class, 'insuranceCreate'])->name('insurance.create');
+    Route::get('/insurance-create', [\App\Http\Controllers\Agent\DashboardController::class, 'insuranceCreate'])->name('insurance.create');
+    Route::post('/insurance-store', [\App\Http\Controllers\Agent\DashboardController::class, 'insuranceStore'])->name('insurance.store');
+    Route::get('/insurance-worltrip/{id}', [\App\Http\Controllers\Agent\DashboardController::class, 'insuranceWorltrip'])->name('insurance.worltrip');
+    Route::get('/insurance-wecare/{id}', [\App\Http\Controllers\Agent\DashboardController::class, 'insuranceWecare'])->name('insurance.wecare');
+    Route::get('/insurance/payment/{id}', [\App\Http\Controllers\Agent\WalletController::class, 'insurancePayment'])->name('insurance.payment');
+    Route::post('/insurance/payment/submit', [\App\Http\Controllers\Agent\WalletController::class, 'insurancePaymentSubmit'])->name('payment.submit');
+    
+    Route::get('/wallet', [\App\Http\Controllers\Agent\WalletController::class, 'walletIndex'])->name('wallet.index');
+    Route::get('/wallet/deposit', [\App\Http\Controllers\Agent\WalletController::class, 'walletDeposit'])->name('wallet.deposit');
+    Route::post('/wallet/deposit/store', [\App\Http\Controllers\Agent\WalletController::class, 'walletDepositStore'])->name('wallet.deposit.store');
    
 });

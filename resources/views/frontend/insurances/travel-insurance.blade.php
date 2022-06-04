@@ -51,7 +51,7 @@
                                         <option value="Worldtrips">Worldtrips</option>
                                         <option value="WeCare">We Care</option>
                                         <option value="Dubai">Dubai Insurance</option>
-                                      </select>
+                                    </select>
                                 </div> 
                                 <div class="col-lg-6 mb-30 col-md-6 col-sm-6">
                                     <input class="from-control" type="text" id="name" name="name" placeholder="Name">

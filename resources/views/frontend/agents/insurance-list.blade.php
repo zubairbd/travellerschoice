@@ -1,73 +1,129 @@
-@extends('layouts.frontend-master')
-@section('dashboard')current-menu-item @endsection
-@section('dashboards')active @endsection
+@extends('layouts.agent-master')@section('dashboard')current-menu-item @endsection
+@section('insurance.list') active @endsection
 @section('styles')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+<!-- Custom styles for this page -->
+<link href="{{asset('frontend')}}/assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<style>
+    .table td, .table th {
+        padding: 0.3rem;
+        vertical-align: top;
+        border-top: 1px solid #e3e6f0;
+    }
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 1px solid #e3e6f0;
+    }
+    .table {
+        color: #070913;
+        font-size: 12px;
+    }
+    #dataTable_length {
+        font-size: 14px;
+    }
+    #dataTable_filter {
+        font-size: 14px;
+    }
+    #dataTable_info {
+        font-size: 14px;
+    }
+    .pagination {
+        font-size: 12px;
+    }
+</style>
 @endsection
 @section('content')
-     <!-- Team Start -->
-     <div class="rs-team-Single pt-120 pb-100 md-pt-80 md-pb-60">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    @include('frontend.users.partials.sidebar')
-                </div>
-                <div class="col-lg-9 sm-pt-30">
-                    <div class="btm-info-team">
-                        <div class="purchase-list">
-                            <h2>Insurance List</h2>
-                            <a href="" class="started float-rigth">Create New Insurance</a>
-                            <table id="example" class="table table-striped table-bordered" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011-04-25</td>
-                                        <td>$320,800</td>
-                                    </tr>
-                            
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Insurance List</h1>
+        <a href="{{route('agent.insurance.create')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-plus fa-sm text-white-50"></i> Create New Insurance</a>
+    </div>
+    
+    @if(session()->has('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session()->get('success') }}
+        </div>
+    @endif
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        {{-- <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Insurance List</h6>
+        </div> --}}
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>SL</th>
+                            <th>Flight Date</th>
+                            <th>Policy No.</th>
+                            <th>Name</th>
+                            <th>Passport</th>
+                            <th>Issue Date</th>
+                            <th>Payment Status</th>
+                            <th>Print</th>
+                        </tr>
+                    </thead>
+                   
+                    <tbody>
+                        @foreach ($insuranceList as $index => $insurance)
+                        <tr>
+                            <td>{{$index+1}}</td>
+                            <td>{{$insurance->effective_date}}</td>
+                            <td>{{$insurance->policy_number}}</td>
+                            <td>{{$insurance->name}}</td>
+                            <td>{{$insurance->pp_number}}</td>
+                            <td>{{$insurance->created_at->format('m/d/Y')}}</td>
+                            <td>
+                                @if (!empty($insurance->payments->passenger_id))
+                                    <span class="btn btn-success btn-xs">Paid</span>
+                                @else
+                                    <a href="{{route('agent.insurance.payment',$insurance->pp_number)}}" class="btn btn-danger btn-xs">Unpaid</a>
+                                @endif
+            
+                            </td>
+                            <td>
+                                @if ($insurance->status == 1)
+                                    @if ($insurance->insurance_type == 'Worldtrips')
+                                    <a href="{{route('agent.insurance.worltrip',$insurance->pp_number)}}" class="btn btn-orange btn-xs"><i class="fas fa-print"></i></a>
+                                    @elseif ($insurance->insurance_type == 'WeCare')
+                                    <a href="{{route('agent.insurance.wecare',$insurance->pp_number)}}" class="btn btn-orange btn-xs"><i class="fas fa-print"></i></a>
+                                    @endif
+                                    
+                                @else
+                                    
+                                    @if (!empty($insurance->payments->passenger_id))
+                                        <span class="btn btn-primary btn-xs">Processing</span>
+                                    @else
+                                        <span class="btn btn-danger btn-xs">Panding</span>
+                                    @endif
+                                @endif
                                 
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                                </td>
+                            
+                        </tr>
+                        @endforeach
+                        
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    <!-- Team End -->
+
+</div>
 
 @endsection
 @section('scripts')
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="{{asset('frontend')}}/assets/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="{{asset('frontend')}}/assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{{asset('frontend')}}/assets/js/demo/datatables-demo.js"></script>
     <script>
-        $(document).ready(function () {
-            $('#example').DataTable();
-        });
+
+        
     </script>
 @endsection
