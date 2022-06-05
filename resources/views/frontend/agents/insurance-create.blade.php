@@ -111,7 +111,7 @@
                                 </div>
                                 <div class="form-group">
                                     {{-- <label for="termination_date">Insurance Expire Date</label> --}}
-                                          <input type="hidden" name="termination_date" class="form-control" id="effective_date" placeholder="Flight Date">
+                                          <input type="hidden" name="termination_date" class="form-control" id="termination_date" placeholder="Flight Date">
                                 </div>
 
 

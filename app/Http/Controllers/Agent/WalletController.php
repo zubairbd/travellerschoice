@@ -21,23 +21,25 @@ class WalletController extends Controller
     public function insurancePaymentSubmit(Request $request){
         $request->validate([
             'passenger_id' => 'required',
-            'account_number' => 'required',
+            
           ]);
           $currentuserID = Auth::user()->id;
+
           $wallet = walletBalance();
 
           if($wallet >= 299){
 
             $payment = new Payment();
     
-            $payment->passenger_id = $currentuserID;
-            $payment->account_number = $request->account_number;
+            $payment->passenger_id = $request->passenger_id;
             $payment->account_number = $currentuserID;
-            $payment->amount = $request->amount;
+            $payment->user_id = $currentuserID;
+            $payment->amount = 300;
             $payment->payment_type = "Wallet";
 
-          
             $payment->save();
+
+            
             return redirect()->route('agent.insurance.list')->with('success', 'Payment successfully done!');
         }else{
             return back()->with('error', 'Wallet Amount Due');

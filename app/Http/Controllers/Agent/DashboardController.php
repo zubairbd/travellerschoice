@@ -53,7 +53,7 @@ class DashboardController extends Controller
           ]);
         $randomId       =   rand(2,9);
         $passengerId = IdGenerator::generate(['table' => 'passengers', 'reset_on_prefix_change' => true,'field'=>'policy_number', 'length' => 8, 'prefix' =>'VS12']);
-        $weCare = IdGenerator::generate(['table' => 'passengers', 'reset_on_prefix_change' => true,'field'=>'policy_number', 'length' => 9, 'prefix' =>'WC-93']);
+        $weCare = IdGenerator::generate(['table' => 'passengers', 'reset_on_prefix_change' => true,'field'=>'policy_number', 'length' => 9, 'prefix' =>'WC-9321']);
 
         // $formattedDate = Carbon::parse($request->effective_date)->format('dd-mm-yy');
         // $newDateFormat3 = \Carbon\Carbon::parse($request->effective_date)->format('dd/mm/yyyy');
@@ -80,7 +80,7 @@ class DashboardController extends Controller
     {
          // retreive all records from db
       //$data = Passenger::findOrFail($id);
-      $data = Passenger::where('pp_number','=',$id)->where('status',1)->first();
+      $data = Passenger::where('pp_number','=',$id)->first();
 
       // Barcode Generate
       $barcodes = base64_encode(QrCode::format('svg')->size(108)->errorCorrection('L')->generate('
@@ -110,7 +110,7 @@ Website: https://www.worldtrips.com
 
 public function insuranceWecare($id){
         
-    $data = Passenger::where('pp_number','=',$id)->where('status',1)->first();
+    $data = Passenger::where('pp_number','=',$id)->first();
 
     // Barcode Generate
     $barcodes = base64_encode(QrCode::format('svg')->size(108)->errorCorrection('L')->generate('

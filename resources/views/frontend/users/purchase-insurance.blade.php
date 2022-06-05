@@ -2,7 +2,7 @@
 @section('dashboard')current-menu-item @endsection
 @section('purchase-insurance')active @endsection
 @section('styles')
-    
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- <link rel="stylesheet" href="{{asset('frontend')}}/assets/js/datatables.min.css"/> --}}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.css"/>
@@ -40,16 +40,18 @@
                                     @foreach ($purchaseHistory as $ins)
                                     <tr>
                                         <td>{{$loop->index+1}}</td>
-                                        <td>{{$ins->policy_number}}</td>
+                                        <td class="invoice">{{$ins->policy_number}}</td>
                                         <td>{{$ins->name}}</td>
                                         <td>{{$ins->pp_number}}</td>
                                         <td>{{$ins->destination}}</td>
-                                        <td>{{$ins->effective_date}}</td>
+                                        {{-- <td>{{$ins->effective_date}}</td> --}}
+                                        <td class="amount">300</td>
                                         <td>
                                             @if (!empty($ins->payments->passenger_id))
                                                 <span class="btn btn-success btn-sm">Paid</span>
                                             @else
                                                 <a href="{{route('user.insurance.payment',$ins->pp_number)}}" class="btn btn-danger btn-sm">Unpaid</a>
+                                                <button class="btn btn-primary" id="bKash_button">Pay with bKash</button>
                                             @endif
                         
                                         </td>
@@ -90,11 +92,117 @@
 @endsection
 @section('scripts')
 {{-- <script type="text/javascript" src="{{asset('frontend')}}/assets/js/datatables.min.js"></script> --}}
+<script src="https://code.jquery.com/jquery-1.8.3.min.js"
+        integrity="sha256-YcbK69I5IXQftf/mYD8WY0/KmEDCv1asggHpJk1trM8=" crossorigin="anonymous"></script>
+
+<script id="myScript"
+        src="https://scripts.sandbox.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout-sandbox.js"></script>
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.js"></script>
 
     <script>
+
+var accessToken = '';
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{!! route('token') !!}",
+            type: 'POST',
+            contentType: 'application/json',
+            success: function (data) {
+                console.log('got data from token  ..');
+                console.log(JSON.stringify(data));
+                accessToken = JSON.stringify(data);
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
+        var paymentConfig = {
+            createCheckoutURL: "{!! route('createpayment') !!}",
+            executeCheckoutURL: "{!! route('executepayment') !!}"
+        };
+        var paymentRequest;
+        paymentRequest = {amount: $('.amount').text(), intent: 'sale', invoice: $('.invoice').text()};
+        console.log(JSON.stringify(paymentRequest));
+        bKash.init({
+            paymentMode: 'checkout',
+            paymentRequest: paymentRequest,
+            createRequest: function (request) {
+                console.log('=> createRequest (request) :: ');
+                console.log(request);
+                $.ajax({
+                    url: paymentConfig.createCheckoutURL + "?amount=" + paymentRequest.amount + "&invoice=" + paymentRequest.invoice,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        console.log('got data from create  ..');
+                        console.log('data ::=>');
+                        console.log(JSON.stringify(data));
+                        var obj = JSON.parse(data);
+                        if (data && obj.paymentID != null) {
+                            paymentID = obj.paymentID;
+                            bKash.create().onSuccess(obj);
+                        }
+                        else {
+                            console.log('error');
+                            bKash.create().onError();
+                        }
+                    },
+                    error: function () {
+                        console.log('error');
+                        bKash.create().onError();
+                    }
+                });
+            },
+            executeRequestOnAuthorization: function () {
+                console.log('=> executeRequestOnAuthorization');
+                $.ajax({
+                    url: paymentConfig.executeCheckoutURL + "?paymentID=" + paymentID,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        console.log('got data from execute  ..');
+                        console.log('data ::=>');
+                        console.log(JSON.stringify(data));
+                        data = JSON.parse(data);
+                        if (data && data.paymentID != null) {
+                            alert('[SUCCESS] data : ' + JSON.stringify(data));
+                            window.location.href = "{!! route('user.insurance.purchase') !!}";
+                        }
+                        else {
+                            bKash.execute().onError();
+                        }
+                    },
+                    error: function () {
+                        bKash.execute().onError();
+                    }
+                });
+            }
+        });
+        console.log("Right after init ");
+    });
+    function callReconfigure(val) {
+        bKash.reconfigure(val);
+    }
+    function clickPayButton() {
+        $("#bKash_button").trigger('click');
+    }
+
+
+
+
+
+
+
+
+
+
       $(document).ready(function() {
             $('#example').DataTable({
                 responsive: true,

@@ -85,20 +85,15 @@
             
                             </td>
                             <td>
-                                @if ($insurance->status == 1)
+                                @if (!empty($insurance->payments->passenger_id))
                                     @if ($insurance->insurance_type == 'Worldtrips')
                                     <a href="{{route('agent.insurance.worltrip',$insurance->pp_number)}}" class="btn btn-orange btn-xs"><i class="fas fa-print"></i></a>
                                     @elseif ($insurance->insurance_type == 'WeCare')
                                     <a href="{{route('agent.insurance.wecare',$insurance->pp_number)}}" class="btn btn-orange btn-xs"><i class="fas fa-print"></i></a>
                                     @endif
                                     
-                                @else
-                                    
-                                    @if (!empty($insurance->payments->passenger_id))
-                                        <span class="btn btn-primary btn-xs">Processing</span>
-                                    @else
-                                        <span class="btn btn-danger btn-xs">Panding</span>
-                                    @endif
+                                @else 
+                                    <span class="btn btn-danger btn-xs">Panding</span>
                                 @endif
                                 
                                 </td>

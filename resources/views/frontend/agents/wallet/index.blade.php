@@ -5,7 +5,7 @@
 <link href="{{asset('frontend')}}/assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <style>
     .table td, .table th {
-        padding: 0.3rem;
+        padding: 0.6rem;
         vertical-align: top;
         border-top: 1px solid #e3e6f0;
     }
@@ -15,7 +15,7 @@
     }
     .table {
         color: #070913;
-        font-size: 12px;
+        font-size: 14px;
     }
     #dataTable_length {
         font-size: 14px;
@@ -43,7 +43,7 @@
     @php
         $balance = App\Models\Wallet::where('status', 1)->sum('amount');
     @endphp
-    <h3 class="alert alert-info">Balance: {{ $balance}}</h3>
+    <h3 class="alert alert-info">Balance: {{ walletBalance() }}</h3>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         {{-- <div class="card-header py-3">
@@ -51,17 +51,15 @@
         </div> --}}
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            
-                            <th>Deposit Date</th>
-                            <th>Account Number</th>
-                            <th>Amount</th>
-                            <th>Status</th>
-                        </tr>
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">Deposit Date</th>
+                        <th scope="col">Account No.</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Status</th>
+                      </tr>
                     </thead>
-                   
                     <tbody>
                         @foreach ($wallets as  $wallet)
                         <tr>
@@ -74,9 +72,9 @@
                             
                         </tr>
                         @endforeach
-                        
                     </tbody>
-                </table>
+                  </table>
+                
             </div>
         </div>
     </div>

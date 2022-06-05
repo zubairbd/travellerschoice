@@ -69,11 +69,13 @@
                                       </select>
                                 </div> 
                             </div>
+                            
                             <div class="btn-part">
                               <input class="submit sub-small" type="submit" value="Pay Now">
                             </div> 
                         </fieldset>
                     </form> 
+                    
                 </div>
             </div>
         </div>
@@ -84,7 +86,12 @@
 @endsection
 @section('scripts')
 <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+
 <script>
+
+
+
   //jQuery Datepicker adding days
   $(document).ready(function() {
       $("#effective_date").datepicker({

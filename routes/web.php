@@ -108,3 +108,7 @@ Route::group(['prefix' => 'agent', 'as' => 'agent.', 'middleware' => ['auth', 'a
     Route::post('/wallet/deposit/store', [\App\Http\Controllers\Agent\WalletController::class, 'walletDepositStore'])->name('wallet.deposit.store');
    
 });
+
+Route::get('token', [\App\Http\Controllers\bkash\PaymentController::class, 'token'])->name('token');
+Route::get('createpayment', [\App\Http\Controllers\bkash\PaymentController::class, 'createpayment'])->name('createpayment');
+Route::get('executepayment', [\App\Http\Controllers\bkash\PaymentController::class, 'executepayment'])->name('executepayment');

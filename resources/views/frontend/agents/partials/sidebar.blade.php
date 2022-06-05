@@ -4,6 +4,7 @@
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('agent.dashboard')}}">
         
         <div class="sidebar-brand-text mx-3"><img src="{{asset('frontend')}}/assets/images/logo-light.png" alt="" srcset=""></div>
+        {{-- <div class="sidebar-logo-vertical" id="logo-vertical"><img src="{{asset('frontend')}}/assets/images/logo-light-vertical.png" alt="" srcset=""></div> --}}
     </a>
 
     <!-- Divider -->

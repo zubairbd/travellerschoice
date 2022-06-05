@@ -9,8 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
-
+    <title>Travellers Choice - @yield('title', 'Travel Destination Management')</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontend')}}/assets/images/favicon.png">
     <!-- Custom fonts for this template-->
     <link href="{{asset('frontend')}}/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -69,6 +69,13 @@
         .form-group
         label {
             color: #010204;
+        }
+        .sidebar-logo-vertical {
+            display: none;
+        }
+        .sidebar-logo-vertical img {
+            width: 90px;
+            
         }
     </style>
 
@@ -220,6 +227,20 @@
     <script src="{{asset('frontend')}}/assets/js/demo/chart-pie-demo.js"></script>
 
     @yield('scripts')
+    <script>
+        
+        
+
+        $(function () {
+ 
+            // This will hide the container surely when you click.
+            $("#sidebarToggle").click(function () {
+                $("#logo-vertical").hide().css("display", "block");
+            });
+            
+
+        });
+    </script>
 </body>
 
 </html>
