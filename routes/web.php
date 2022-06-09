@@ -109,6 +109,8 @@ Route::group(['prefix' => 'agent', 'as' => 'agent.', 'middleware' => ['auth', 'a
    
 });
 
-Route::get('token', [\App\Http\Controllers\bkash\PaymentController::class, 'token'])->name('token');
-Route::get('createpayment', [\App\Http\Controllers\bkash\PaymentController::class, 'createpayment'])->name('createpayment');
-Route::get('executepayment', [\App\Http\Controllers\bkash\PaymentController::class, 'executepayment'])->name('executepayment');
+Route::resource('orders', 'App\Http\Controllers\Bkash\OrderController');
+Route::post('token', [\App\Http\Controllers\Bkash\PaymentController::class, 'token'])->name('token');
+Route::get('createpayment', [\App\Http\Controllers\Bkash\PaymentController::class, 'createpayment'])->name('createpayment');
+Route::get('executepayment', [\App\Http\Controllers\Bkash\PaymentController::class, 'executepayment'])->name('executepayment');
+

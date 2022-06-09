@@ -11,7 +11,7 @@
                     @csrf
                    <div class="form-group mb-30">
                        <label>Username or email address<span>*</span></label>
-                       <input id="email" name="email" class="form-control-mod @error('email') is-invalid @enderror" type="text"> 
+                       <input id="email" name="email" class="form-control-mod @error('email') is-invalid  @enderror" type="text" value="{{ old('email') }}"> 
                        @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -22,11 +22,11 @@
                    </div>
                    <button class="add-btn" type="submit">Log In</button>
                     <label>
-                        <input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever">
+                        <input class="woocommerce-form__input woocommerce-form__input-checkbox" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                         <span>Remember me</span>
                     </label>
                    <div class="last-password pt-30">
-                        <a href="#">Lost your password?</a>
+                        <a href="{{ route('password.request') }}">Lost your password?</a>
                         <a style="float: right" class="btn btn-warning" href="{{url('register')}}">Register</a>
                     </div>
                 </form>

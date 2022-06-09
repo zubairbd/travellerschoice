@@ -50,10 +50,14 @@ class PassengerController extends Controller
           ]);
         $randomId       =   rand(2,9);
         $passengerId = IdGenerator::generate(['table' => 'passengers', 'reset_on_prefix_change' => true,'field'=>'policy_number', 'length' => 8, 'prefix' =>'VS12']);
-        $weCare = IdGenerator::generate(['table' => 'passengers', 'reset_on_prefix_change' => true,'field'=>'policy_number', 'length' => 10, 'prefix' =>'WC-167542']);
+        $weCare = IdGenerator::generate(['table' => 'passengers', 'reset_on_prefix_change' => true,'field'=>'policy_number', 'length' => 9, 'prefix' =>'WC-93']);
         // $formattedDate = Carbon::parse($request->effective_date)->format('dd-mm-yy');
         // $newDateFormat3 = \Carbon\Carbon::parse($request->effective_date)->format('dd/mm/yyyy');
-        $input['policy_number'] = $passengerId.$randomId;
+        if($request->insurance_type == 'Worldtrips'){
+            $input['policy_number'] =  $passengerId.$randomId;
+        }elseif($request->insurance_type == 'WeCare'){
+            $input['policy_number'] = $weCare.$randomId;
+        }
         // $input['effective_date'] = $newDateFormat3;
         $passenger = Passenger::create($input);
 
@@ -96,20 +100,34 @@ class PassengerController extends Controller
         $passenger = Passenger::findOrFail($id);
 
         $request->validate([
-          'policy_number' => 'required|string|max:255',
-          'name' => 'required|string|max:255',
-        ]);
+            // 'policy_number' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
+          ]);
 
+        $randomId       =   rand(2,9);
+        $passengerId = IdGenerator::generate(['table' => 'passengers', 'reset_on_prefix_change' => true,'field'=>'policy_number', 'length' => 8, 'prefix' =>'VS12']);
+        $weCare = IdGenerator::generate(['table' => 'passengers', 'reset_on_prefix_change' => true,'field'=>'policy_number', 'length' => 9, 'prefix' =>'WC-93']);
+        
+        
 
-        $passenger->policy_number = $request->policy_number;
+        // $passenger->policy_number = $request->policy_number;
         $passenger->name = $request->name;
         $passenger->dob = $request->dob;
         $passenger->pp_number = $request->pp_number;
         $passenger->effective_date = $request->effective_date;
         $passenger->termination_date = $request->termination_date;
         $passenger->destination = $request->destination;
+        $passenger->insurance_type = $request->insurance_type;
         $passenger->updated_at = $request->updated_at;
 
+        if($passenger->isDirty('insurance_type')){
+            if($request->insurance_type == 'Worldtrips'){
+                $passenger->policy_number =  $passengerId.$randomId;
+            }elseif($request->insurance_type == 'WeCare'){
+                $passenger->policy_number = $weCare.$randomId;
+            }
+         }
+        
         $passenger->save();
 
         return back()->with('updated','Passenger updated !');

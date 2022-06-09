@@ -20,6 +20,9 @@ class CreatePaymentsTable extends Migration
             $table->string('amount')->nullable();
             $table->string('payment_type')->nullable();
             $table->string('user_id')->nullable();
+            $table->string('invoice')->nullable();
+            $table->string('trxID')->nullable();
+            $table->string('status')->default(0);
             $table->timestamps();
         });
     }

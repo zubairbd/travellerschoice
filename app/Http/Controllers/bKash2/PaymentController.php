@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Bkash;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -144,10 +143,10 @@ class PaymentController extends Controller
         $resultdatax = json_decode($resultdatax);
 
         if ($resultdatax && $resultdatax->paymentID != null && $resultdatax->transactionStatus == 'Completed') {
-            DB::table('payments')->where([
+            DB::table('orders')->where([
                 'invoice' => $resultdatax->merchantInvoiceNumber
             ])->update([
-                'status' => 1, 'trxID' => $resultdatax->trxID
+                'status' => 'Processing', 'trxID' => $resultdatax->trxID
             ]);
         }
     }

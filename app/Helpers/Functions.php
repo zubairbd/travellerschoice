@@ -36,6 +36,38 @@ if (! function_exists('walletBalance')) {
 
         return $payments;
     }
+
+
+    function walletPandingBalance()
+    {
+        $id = Auth::user()->id;
+
+        $wallet = Wallet::where('agent_id', $id)->where('status', 0)->sum('amount');
+
+
+        return $wallet;
+    }
+
+
+
+    // Admin
+
+    function totalPayment()
+    {
+        $payments = Payment::sum('amount');
+
+        return $payments;
+    }
+
+
+    function totalInsCompleted()
+    {
+        
+        // $insurance = Passenger::with('payments')->sum();
+        $payments = Payment::count();
+        return $payments;
+    }
+
 }
 
 

@@ -6,11 +6,9 @@
         <a href="#" data-scroll-nav="2">About</a>
     </li>
     <li><a href="#" data-scroll-nav="1">Services</a></li>
-    @auth
-    @if(Auth::user()->role == 'U')
+    
     <li class="@yield('travel-insurance')"><a href="{{route('user.insurance.create')}}">Apply Insurance</a></li>
-    @endif
-    @endauth
+    
     <li>
        <a href="#" data-scroll-nav="5">Contact</a>
     </li>

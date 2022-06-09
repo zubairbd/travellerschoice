@@ -3,6 +3,13 @@
 @section('styles')
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"/>
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 @endsection
 @section('content')
       <!-- Counter Section Start -->
@@ -42,19 +49,22 @@
                         </div>
                     @endif             
                     {{-- <div id="form-messages"></div> --}}
-                    <form method="post" action="{{route('user.insurance.payment.submit')}}">
-                        @csrf
+                    {{-- <form method="post" action="{{route('user.insurance.payment.submit')}}">
+                        @csrf --}}
                         <fieldset>
                             <div class="row">
                                 <input class="from-control" type="hidden" name="passenger_id" value="{{$passenger->id}}">
                                 <div class="col-lg-12 mb-30 col-md-12 col-sm-12">
-                                    <input class="from-control" type="text" value="{{$passenger->policy_number}}" placeholder="Name" disabled>
+                                    <input class="from-control invoice" type="text" value="{{$passenger->policy_number}}" placeholder="Name" disabled>
                                 </div> 
                                 <div class="col-lg-6 mb-30 col-md-6 col-sm-6">
                                     <input class="from-control" type="text" value="{{$passenger->name}}" placeholder="Name" disabled>
                                 </div> 
                                 <div class="col-lg-6 mb-30 col-md-6 col-sm-6">
                                     <input class="from-control" type="text" value="{{$passenger->pp_number}}" disabled>
+                                </div>
+                                <div class="col-lg-6 mb-30 col-md-6 col-sm-6">
+                                    <input class="from-control amount" type="text" name="amount" value="300" disabled>
                                 </div>
                                 <div class="col-lg-6 mb-30 col-md-6 col-sm-6">
                                     <input class="from-control" type="text" id="account_number" name="account_number" placeholder="Mobile Banking Number">
@@ -69,12 +79,12 @@
                                       </select>
                                 </div> 
                             </div>
-                            
+                            <button class="btn btn-primary" id="bKash_button">Pay with bKash</button>
                             <div class="btn-part">
                               <input class="submit sub-small" type="submit" value="Pay Now">
                             </div> 
                         </fieldset>
-                    </form> 
+                    {{-- </form>  --}}
                     
                 </div>
             </div>
@@ -86,10 +96,120 @@
 @endsection
 @section('scripts')
 <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-1.8.3.min.js"
+        integrity="sha256-YcbK69I5IXQftf/mYD8WY0/KmEDCv1asggHpJk1trM8=" crossorigin="anonymous"></script>
+
+<script id="myScript"
+        src="https://scripts.sandbox.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout-sandbox.js"></script>
 
 
 <script>
-
+     var accessToken = '';
+        
+        $(document).ready(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+    
+            $.ajax({
+                url: "{!! route('token') !!}",
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (data) {
+                    console.log('got data from token  ..');
+                    console.log(JSON.stringify(data));
+    
+                    accessToken = JSON.stringify(data);
+                },
+                error: function () {
+                    console.log('error');
+    
+                }
+            });
+    
+            var paymentConfig = {
+                createCheckoutURL: "{!! route('createpayment') !!}",
+                executeCheckoutURL: "{!! route('executepayment') !!}"
+            };
+    
+    
+            var paymentRequest;
+            paymentRequest = {amount: $('.amount').val(), intent: 'sale', invoice: $('.invoice').val()};
+            console.log(JSON.stringify(paymentRequest));
+    
+            bKash.init({
+                paymentMode: 'checkout',
+                paymentRequest: paymentRequest,
+                createRequest: function (request) {
+                    console.log('=> createRequest (request) :: ');
+                    console.log(request);
+    
+                    $.ajax({
+                        url: paymentConfig.createCheckoutURL + "?amount=" + paymentRequest.amount + "&invoice=" + paymentRequest.invoice,
+                        type: 'GET',
+                        contentType: 'application/json',
+                        success: function (data) {
+                            console.log('got data from create  ..');
+                            console.log('data ::=>');
+                            console.log(JSON.stringify(data));
+    
+                            var obj = JSON.parse(data);
+    
+                            if (data && obj.paymentID != null) {
+                                paymentID = obj.paymentID;
+                                bKash.create().onSuccess(obj);
+                            }
+                            else {
+                                console.log('error');
+                                bKash.create().onError();
+                            }
+                        },
+                        error: function () {
+                            console.log('error');
+                            bKash.create().onError();
+                        }
+                    });
+                },
+    
+                executeRequestOnAuthorization: function () {
+                    console.log('=> executeRequestOnAuthorization');
+                    $.ajax({
+                        url: paymentConfig.executeCheckoutURL + "?paymentID=" + paymentID,
+                        type: 'GET',
+                        contentType: 'application/json',
+                        success: function (data) {
+                            console.log('got data from execute  ..');
+                            console.log('data ::=>');
+                            console.log(JSON.stringify(data));
+    
+                            data = JSON.parse(data);
+                            if (data && data.paymentID != null) {
+                                alert('[SUCCESS] data : ' + JSON.stringify(data));
+                                window.location.href = "{!! route('orders.index') !!}";
+                            }
+                            else {
+                                bKash.execute().onError();
+                            }
+                        },
+                        error: function () {
+                            bKash.execute().onError();
+                        }
+                    });
+                }
+            });
+    
+            console.log("Right after init ");
+        });
+    
+        function callReconfigure(val) {
+            bKash.reconfigure(val);
+        }
+    
+        function clickPayButton() {
+            $("#bKash_button").trigger('click');
+        }
 
 
   //jQuery Datepicker adding days

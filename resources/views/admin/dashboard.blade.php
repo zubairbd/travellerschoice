@@ -18,7 +18,7 @@
             <div class="small-box bg-yellow">
               <div class="inner">
                 <h3>{{$passenger}}</h3>
-                <p>Total Passengers</p>
+                <p>Total Insurance</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -31,8 +31,8 @@
           <div class="col-md-6">
             <div class="small-box bg-red">
               <div class="inner">
-                <h3>5</h3>
-                <p>Total Quiz</p>
+                <h3>{{totalPayment()}}</h3>
+                <p>Total Payment Received</p>
               </div>
               <div class="icon">
                 <i class="fa fa-question-circle-o"></i>
@@ -45,8 +45,8 @@
           <div class="col-md-6">
             <div class="small-box bg-green">
               <div class="inner">
-                <h3>0</h3>
-                <p>Total Questions</p>
+                <h3>{{totalInsCompleted()}}</h3>
+                <p>Total Insurance Completed</p>
               </div>
               <div class="icon">
                 <i class="fa fa-question-circle-o"></i>

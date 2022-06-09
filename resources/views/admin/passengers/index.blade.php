@@ -53,7 +53,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Add Passenger</h4>
+            <h4 class="modal-title">Add Insurance</h4>
           </div>
           {!! Form::open(['method' => 'POST', 'action' => '\App\Http\Controllers\PassengerController@store']) !!}
             <div class="modal-body">
@@ -77,12 +77,12 @@
                     {!! Form::text('dob', null, ['class' => 'form-control datepicker', 'id' => 'dob', 'placeholder' => '01/01/1997', 'required' => 'required']) !!}
                     <small class="text-danger">{{ $errors->first('dob') }}</small>
                   </div>
-                  {{-- <div class="form-group{{ $errors->has('policy_number') ? ' has-error' : '' }}">
-                    {!! Form::label('policy_number', 'Policy Number') !!}
-                    <span class="required">*</span>
-                    {!! Form::text('policy_number', null, ['class' => 'form-control', 'placeholder' => 'eg: AB1234567', 'required' => 'required']) !!}
-                    <small class="text-danger">{{ $errors->first('policy_number') }}</small>
-                  </div> --}}
+                  <div class="form-group{{ $errors->has('insurance_type') ? ' has-error' : '' }}">
+                    {!! Form::label('insurance_type', 'Insurance Type') !!}
+
+                    {!! Form::select('insurance_type', ['Worldtrips' => 'Worldtrips', 'WeCare'=>'WeCare', 'Dubai Insurance'=>'DubaiInsurance'], null, ['class' => 'form-control select2', 'required' => 'required']) !!}
+                    <small class="text-danger">{{ $errors->first('destination') }}</small>
+                  </div>
                   
                 </div>
                 <div class="col-md-6">
@@ -115,6 +115,7 @@
                   </div>
                   
                 </div>
+                
               </div>
             </div>
             <div class="modal-footer">
@@ -237,7 +238,7 @@
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Edit Student </h4>
+                        <h4 class="modal-title">Edit Insurance </h4>
                       </div>
                       {!! Form::model($passenger, ['method' => 'PATCH', 'action' => ['\App\Http\Controllers\PassengerController@update', $passenger->id]]) !!}
                         <div class="modal-body">
@@ -261,13 +262,18 @@
                                 {!! Form::text('dob', null, ['class' => 'form-control datepicker', 'id' => 'dob', 'placeholder' => '01/01/1997', 'required' => 'required']) !!}
                                 <small class="text-danger">{{ $errors->first('dob') }}</small>
                               </div>
-                              <div class="form-group{{ $errors->has('policy_number') ? ' has-error' : '' }}">
+                              {{-- <div class="form-group{{ $errors->has('policy_number') ? ' has-error' : '' }}">
                                 {!! Form::label('policy_number', 'Policy Number') !!}
                                 <span class="required">*</span>
                                 {!! Form::text('policy_number', null, ['class' => 'form-control', 'placeholder' => 'eg: AB1234567', 'required' => 'required']) !!}
                                 <small class="text-danger">{{ $errors->first('policy_number') }}</small>
+                              </div> --}}
+                              <div class="form-group{{ $errors->has('updated_at') ? ' has-error' : '' }}">
+                                {!! Form::label('updated_at', 'Issue Date') !!}
+
+                                {!! Form::text('updated_at', null, ['class' => 'form-control datepicker', 'id' => 'updated_at', 'placeholder' => 'eg: 01/02/2021']) !!}
+                                <small class="text-danger">{{ $errors->first('updated_at') }}</small>
                               </div>
-                              
                             </div>
                             <div class="col-md-6">
                               <div class="form-group{{ $errors->has('destination') ? ' has-error' : '' }}">
@@ -291,14 +297,14 @@
                                 <small class="text-danger">{{ $errors->first('termination_date') }}</small>
                               </div>
                               
-                              <div class="form-group{{ $errors->has('updated_at') ? ' has-error' : '' }}">
-                                {!! Form::label('updated_at', 'Issue Date') !!}
-
-                                {!! Form::text('updated_at', null, ['class' => 'form-control datepicker', 'id' => 'updated_at', 'placeholder' => 'eg: 01/02/2021']) !!}
-                                <small class="text-danger">{{ $errors->first('updated_at') }}</small>
-                              </div>
-
                               
+
+                              <div class="form-group{{ $errors->has('insurance_type') ? ' has-error' : '' }}">
+                                {!! Form::label('insurance_type', 'Insurance Type') !!}
+            
+                                {!! Form::select('insurance_type', ['Worldtrips' => 'Worldtrips', 'WeCare'=>'WeCare', 'Dubai Insurance'=>'DubaiInsurance'], null, ['class' => 'form-control select2', 'required' => 'required']) !!}
+                                <small class="text-danger">{{ $errors->first('destination') }}</small>
+                              </div>
 
                             </div>
                           </div>

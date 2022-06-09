@@ -2,11 +2,16 @@
 @section('dashboard')current-menu-item @endsection
 @section('purchase-insurance')active @endsection
 @section('styles')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     {{-- <link rel="stylesheet" href="{{asset('frontend')}}/assets/js/datatables.min.css"/> --}}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.dataTables.css"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 @endsection
 @section('content')
@@ -92,126 +97,121 @@
 @endsection
 @section('scripts')
 {{-- <script type="text/javascript" src="{{asset('frontend')}}/assets/js/datatables.min.js"></script> --}}
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.js"></script>
 <script src="https://code.jquery.com/jquery-1.8.3.min.js"
         integrity="sha256-YcbK69I5IXQftf/mYD8WY0/KmEDCv1asggHpJk1trM8=" crossorigin="anonymous"></script>
 
 <script id="myScript"
         src="https://scripts.sandbox.bka.sh/versions/1.2.0-beta/checkout/bKash-checkout-sandbox.js"></script>
 
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.js"></script>
-
-    <script>
-
-var accessToken = '';
-    $(document).ready(function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: "{!! route('token') !!}",
-            type: 'POST',
-            contentType: 'application/json',
-            success: function (data) {
-                console.log('got data from token  ..');
-                console.log(JSON.stringify(data));
-                accessToken = JSON.stringify(data);
-            },
-            error: function () {
-                console.log('error');
-            }
-        });
-        var paymentConfig = {
-            createCheckoutURL: "{!! route('createpayment') !!}",
-            executeCheckoutURL: "{!! route('executepayment') !!}"
-        };
-        var paymentRequest;
-        paymentRequest = {amount: $('.amount').text(), intent: 'sale', invoice: $('.invoice').text()};
-        console.log(JSON.stringify(paymentRequest));
-        bKash.init({
-            paymentMode: 'checkout',
-            paymentRequest: paymentRequest,
-            createRequest: function (request) {
-                console.log('=> createRequest (request) :: ');
-                console.log(request);
+        <script>
+            var accessToken = '';
+        
+            $(document).ready(function () {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+        
                 $.ajax({
-                    url: paymentConfig.createCheckoutURL + "?amount=" + paymentRequest.amount + "&invoice=" + paymentRequest.invoice,
-                    type: 'GET',
+                    url: "{!! route('token') !!}",
+                    type: 'POST',
                     contentType: 'application/json',
                     success: function (data) {
-                        console.log('got data from create  ..');
-                        console.log('data ::=>');
+                        console.log('got data from token  ..');
                         console.log(JSON.stringify(data));
-                        var obj = JSON.parse(data);
-                        if (data && obj.paymentID != null) {
-                            paymentID = obj.paymentID;
-                            bKash.create().onSuccess(obj);
-                        }
-                        else {
-                            console.log('error');
-                            bKash.create().onError();
-                        }
+        
+                        accessToken = JSON.stringify(data);
                     },
                     error: function () {
                         console.log('error');
-                        bKash.create().onError();
+        
                     }
                 });
-            },
-            executeRequestOnAuthorization: function () {
-                console.log('=> executeRequestOnAuthorization');
-                $.ajax({
-                    url: paymentConfig.executeCheckoutURL + "?paymentID=" + paymentID,
-                    type: 'GET',
-                    contentType: 'application/json',
-                    success: function (data) {
-                        console.log('got data from execute  ..');
-                        console.log('data ::=>');
-                        console.log(JSON.stringify(data));
-                        data = JSON.parse(data);
-                        if (data && data.paymentID != null) {
-                            alert('[SUCCESS] data : ' + JSON.stringify(data));
-                            window.location.href = "{!! route('user.insurance.purchase') !!}";
-                        }
-                        else {
-                            bKash.execute().onError();
-                        }
+        
+                var paymentConfig = {
+                    createCheckoutURL: "{!! route('createpayment') !!}",
+                    executeCheckoutURL: "{!! route('executepayment') !!}"
+                };
+        
+        
+                var paymentRequest;
+                paymentRequest = {amount: $('.amount').text(), intent: 'sale', invoice: $('.invoice').text()};
+                console.log(JSON.stringify(paymentRequest));
+        
+                bKash.init({
+                    paymentMode: 'checkout',
+                    paymentRequest: paymentRequest,
+                    createRequest: function (request) {
+                        console.log('=> createRequest (request) :: ');
+                        console.log(request);
+        
+                        $.ajax({
+                            url: paymentConfig.createCheckoutURL + "?amount=" + paymentRequest.amount + "&invoice=" + paymentRequest.invoice,
+                            type: 'GET',
+                            contentType: 'application/json',
+                            success: function (data) {
+                                console.log('got data from create  ..');
+                                console.log('data ::=>');
+                                console.log(JSON.stringify(data));
+        
+                                var obj = JSON.parse(data);
+        
+                                if (data && obj.paymentID != null) {
+                                    paymentID = obj.paymentID;
+                                    bKash.create().onSuccess(obj);
+                                }
+                                else {
+                                    console.log('error');
+                                    bKash.create().onError();
+                                }
+                            },
+                            error: function () {
+                                console.log('error');
+                                bKash.create().onError();
+                            }
+                        });
                     },
-                    error: function () {
-                        bKash.execute().onError();
+        
+                    executeRequestOnAuthorization: function () {
+                        console.log('=> executeRequestOnAuthorization');
+                        $.ajax({
+                            url: paymentConfig.executeCheckoutURL + "?paymentID=" + paymentID,
+                            type: 'GET',
+                            contentType: 'application/json',
+                            success: function (data) {
+                                console.log('got data from execute  ..');
+                                console.log('data ::=>');
+                                console.log(JSON.stringify(data));
+        
+                                data = JSON.parse(data);
+                                if (data && data.paymentID != null) {
+                                    alert('[SUCCESS] data : ' + JSON.stringify(data));
+                                    window.location.href = "{!! route('orders.index') !!}";
+                                }
+                                else {
+                                    bKash.execute().onError();
+                                }
+                            },
+                            error: function () {
+                                bKash.execute().onError();
+                            }
+                        });
                     }
                 });
+        
+                console.log("Right after init ");
+            });
+        
+            function callReconfigure(val) {
+                bKash.reconfigure(val);
             }
-        });
-        console.log("Right after init ");
-    });
-    function callReconfigure(val) {
-        bKash.reconfigure(val);
-    }
-    function clickPayButton() {
-        $("#bKash_button").trigger('click');
-    }
-
-
-
-
-
-
-
-
-
-
-      $(document).ready(function() {
-            $('#example').DataTable({
-                responsive: true,
-                "lengthChange": false,
-                "ordering": false,
-                "searching": true,
-            } );
-
-            
-      });
-    </script>
+        
+            function clickPayButton() {
+                $("#bKash_button").trigger('click');
+            }
+        </script>
 @endsection
