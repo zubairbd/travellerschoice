@@ -1,0 +1,67 @@
+/*!
+ * Start Bootstrap - SB Admin 2 v4.1.3 (https://startbootstrap.com/theme/sb-admin-2)
+ * Copyright 2013-2021 Start Bootstrap
+ * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin-2/blob/master/LICENSE)
+ *//*!
+ * Bootstrap v4.6.0 (https://getbootstrap.com/)
+ * Copyright 2011-2021 The Bootstrap Authors
+ * Copyright 2011-2021 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ */
+
+ .table td, .table th {
+    padding: 0.3rem;
+    vertical-align: top;
+    border-top: 1px solid #e3e6f0;
+}
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 1px solid #e3e6f0;
+}
+.table {
+    color: #070913;
+    font-size: 12px;
+}
+#dataTable_length {
+    font-size: 14px;
+}
+#dataTable_filter {
+    font-size: 14px;
+}
+#dataTable_info {
+    font-size: 14px;
+}
+.pagination {
+    font-size: 12px;
+}
+
+.modal-header {
+	border-bottom-color: #f4f4f4;
+    display: block;
+}
+.modal-title {
+	font-size: 18px;
+    color: black;
+}
+
+
+.delete-modal .delete-icon::before {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	content: "";
+	width: 35px;
+	height: 3px;
+	background-color: #FF4061;
+	transform: translate(-50%,-50%) rotate(45deg);
+}
+.delete-modal .delete-icon::after {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	content: "";
+	width: 35px;
+	height: 3px;
+	background-color: #FF4061;
+	transform: translate(-50%,-50%) rotate(-45deg);
+}

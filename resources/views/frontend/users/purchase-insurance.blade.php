@@ -52,7 +52,7 @@
                                         {{-- <td>{{$ins->effective_date}}</td> --}}
                                         <td class="amount">300</td>
                                         <td>
-                                            @if (!empty($ins->payments->passenger_id))
+                                            @if (!empty($ins->payments->Insurance_id))
                                                 <span class="btn btn-success btn-sm">Paid</span>
                                             @else
                                                 <a href="{{route('user.insurance.payment',$ins->pp_number)}}" class="btn btn-danger btn-sm">Unpaid</a>
@@ -70,7 +70,7 @@
                                                 
                                             @else
                                                 
-                                                @if (!empty($ins->payments->passenger_id))
+                                                @if (!empty($ins->payments->Insurance_id))
                                                     <span class="btn btn-primary btn-sm">Processing</span>
                                                 @else
                                                     <span class="btn btn-danger btn-sm">Panding</span>

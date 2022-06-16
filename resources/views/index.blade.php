@@ -29,7 +29,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($passengers ?? '' as $data)
+                @foreach($Insurances ?? '' as $data)
                 <tr>
                     <th scope="row">{{ $data->id }}</th>
                     <td>{{ $data->policy_number }}</td>

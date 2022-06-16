@@ -6,7 +6,7 @@ use App\Models\Payment;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class PassengerPaymentImport implements ToModel, WithHeadingRow
+class InsurancePaymentImport implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row
@@ -18,7 +18,7 @@ class PassengerPaymentImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new Payment([
-            'passenger_id' => $row['passenger_id'],
+            'Insurance_id' => $row['Insurance_id'],
             'account_number' => $row['account_number'],
             'payment_type' => $row['payment_type'],
         ]);

@@ -1,11 +1,13 @@
 @extends('layouts.admin', [
-  'page_header' => 'Students',
+  'page_header' => 'Wallets',
   'dash' => '',
   'users' => '',
-  'pass' => '',
-  'ins' => '',
+  'product' => '',
+  'disc' => '',
+  'comorder' => '',
+  'pandorder' => '',
   'pay' => '',
-  'sett' => ''
+  'wallet' => 'active'
 ])
 
 @section('styles')
@@ -20,36 +22,14 @@
 @include('message')
   @if ($auth->role == 'A')
     <div class="margin-bottom">
-      <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#createModal">Add Passenger</button>
-      <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#importPassenger">Import Passengers</button>
-      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#AllDeleteModal">Delete All Passengers</button>
+      <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#createModal">Add Insurance</button>
+      <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#importInsurance">Import Insurances</button>
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#AllDeleteModal">Delete All Insurances</button>
       
-    </div>
-    <!-- All Delete Button -->
-    <div id="AllDeleteModal" class="delete-modal modal fade" role="dialog">
-      <!-- All Delete Modal -->
-      <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <div class="delete-icon"></div>
-          </div>
-          <div class="modal-body text-center">
-            <h4 class="modal-heading">Are You Sure ?</h4>
-            <p>Do you really want to delete "All these records"? This process cannot be undone.</p>
-          </div>
-          <div class="modal-footer">
-            {!! Form::open(['method' => 'POST', 'action' => '\App\Http\Controllers\DestroyAllController@AllPassengerDestroy']) !!}
-                {!! Form::reset("No", ['class' => 'btn btn-gray', 'data-dismiss' => 'modal']) !!}
-                {!! Form::submit("Yes", ['class' => 'btn btn-danger']) !!}
-            {!! Form::close() !!}
-          </div>
-        </div>
-      </div>
     </div>
     <!-- Create Modal -->
    
-    <!-- Import Passenger Modal -->
+    <!-- Import Insurance Modal -->
   
     <div class="content-block box">
       <div class="box-body table-responsive">
@@ -104,26 +84,26 @@
                             <h4 class="modal-heading">Are You Sure ?</h4>
                             <p>Do you really want to delete these records? This process cannot be undone.</p>
                           </div>
-                          <div class="modal-footer">
-                            {!! Form::open(['method' => 'DELETE', 'action' => ['\App\Http\Controllers\PassengerController@destroy', $wallet->id]]) !!}
+                          {{-- <div class="modal-footer">
+                            {!! Form::open(['method' => 'DELETE', 'action' => ['\App\Http\Controllers\Admin\WalletController@destroy', $wallet->id]]) !!}
                                 {!! Form::reset("No", ['class' => 'btn btn-gray', 'data-dismiss' => 'modal']) !!}
                                 {!! Form::submit("Yes", ['class' => 'btn btn-danger']) !!}
                             {!! Form::close() !!}
-                          </div>
+                          </div> --}}
                         </div>
                       </div>
                     </div>
                   </td>
                 </tr>
                 <!-- edit model -->
-                <div id="{{$wallet->id}}EditModal" class="modal fade" role="dialog">
+                {{-- <div id="{{$wallet->id}}EditModal" class="modal fade" role="dialog">
                   <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Edit Student </h4>
                       </div>
-                      {!! Form::model($wallet, ['method' => 'PATCH', 'action' => ['\App\Http\Controllers\PassengerController@update', $wallet->id]]) !!}
+                      {!! Form::model($wallet, ['method' => 'PATCH', 'action' => ['\App\Http\Controllers\Admin\WalletController@update', $wallet->id]]) !!}
                         <div class="modal-body">
                           <div class="row">
                             <div class="col-md-6">
@@ -195,7 +175,7 @@
                       {!! Form::close() !!}
                     </div>
                   </div>
-                </div>
+                </div> --}}
               @endforeach
             @endif
           </tbody>
@@ -255,13 +235,13 @@ $(document).ready(function() {
   // $(function() {
   //   $('.toggle-class').change(function() {
   //       var status = $(this).prop('checked') == true ? 1 : 0; 
-  //       var passenger_id = $(this).data('id'); 
+  //       var Insurance_id = $(this).data('id'); 
          
   //       $.ajax({
   //           type: "GET",
   //           dataType: "json",
-  //           url: 'passenger/status',
-  //           data: {'status': status, 'passenger_id': passenger_id},
+  //           url: 'Insurance/status',
+  //           data: {'status': status, 'Insurance_id': Insurance_id},
   //           success: function(data){
   //             console.log(data);
   //             if(data.status == 'success') {
@@ -285,7 +265,7 @@ $(document).ready(function() {
   //   console.log(status);
   //   // $.ajax({
   //   //   method: "get",
-  //   //   url: "passenger/status/"+id+"/"+status,
+  //   //   url: "Insurance/status/"+id+"/"+status,
   //   //   success: function (response) {
   //   //     console.log(response);
   //   //   }

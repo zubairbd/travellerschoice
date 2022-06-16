@@ -1,6 +1,6 @@
 @extends('layouts.frontend-master')
 @section('dashboard')current-menu-item @endsection
-@section('purchase-insurance')active @endsection
+@section('manage-profile')active @endsection
 @section('styles')
     
     {{-- <link rel="stylesheet" href="{{asset('frontend')}}/assets/js/datatables.min.css"/> --}}

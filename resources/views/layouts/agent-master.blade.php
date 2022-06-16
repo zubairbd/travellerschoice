@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Travellers Choice - @yield('title', 'Travel Destination Management')</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontend')}}/assets/images/favicon.png">
     <!-- Custom fonts for this template-->
@@ -18,7 +18,9 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
+    <link href="{{asset('frontend')}}/assets/css/sb-admin-pro.css" rel="stylesheet">
     <link href="{{asset('frontend')}}/assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="{{asset('frontend')}}/assets/css/custom-agent.css" rel="stylesheet">
     @yield('styles')
     <style>
          .sidebar-brand-text.mx-3 img {
@@ -77,6 +79,14 @@
             width: 90px;
             
         }
+        .card {
+            margin: 20px;
+        }
+        .sidebar .nav-item .nav-link .img-profile, .topbar .nav-item .nav-link .img-profile {
+            height: 2rem;
+            width: 2rem;
+            border: 1px solid #ddd;
+        }
     </style>
 
 </head>
@@ -97,7 +107,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-s4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -127,13 +137,20 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Auth::user()->name}}</span>
-                                <img class="img-profile rounded-circle"
-                                    src="{{asset('frontend')}}/assets/img/undraw_profile.svg">
+                                {{-- <img class="img-profile rounded-circle"
+                                    src="{{asset('frontend')}}/assets/img/undraw_profile.svg"> --}}
+                                     
+                                    @if (auth()->user()->photo == null)
+                                        <img class="img-profile rounded-circle" src="http://i.pravatar.cc/500?img=7">
+                                        @else
+                                        <img class="img-profile rounded-circle" src="{{asset('frontend/assets/images/profiles/'.auth()->user()->photo)}}">
+                                        
+                                    @endif
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{route('agent.profile.index')}}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -224,7 +241,8 @@
 
     <!-- Page level custom scripts -->
     <script src="{{asset('frontend')}}/assets/js/demo/chart-area-demo.js"></script>
-    <script src="{{asset('frontend')}}/assets/js/demo/chart-pie-demo.js"></script>
+
+    <script src="{{asset('frontend')}}/assets/js/custom-agent.js"></script>
 
     @yield('scripts')
     <script>

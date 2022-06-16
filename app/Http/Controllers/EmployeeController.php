@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
-use App\Models\Passenger;
+use App\Models\Insurance;
 use Illuminate\Http\Request;
 use PDF;
 use Picqer;
@@ -15,9 +15,9 @@ class EmployeeController extends Controller
 {
     // Display user data in view
     public function showEmployees(){
-        $passengers = Passenger::all();
+        $Insurances = Insurance::all();
         $barcodes = DNS1D::getBarcodeHTML('4445645656', 'CODE11');
-        return view('index', compact('passengers','barcodes'));
+        return view('index', compact('Insurances','barcodes'));
       }
 
 
@@ -45,7 +45,7 @@ class EmployeeController extends Controller
     //Ins Generate PDF
     public function edit($id) {
       // retreive all records from db
-      $data = Passenger::findOrFail($id);
+      $data = Insurance::findOrFail($id);
 
       // Barcode Generate
       $barcodes = base64_encode(QrCode::format('svg')->size(108)->errorCorrection('L')->generate('
@@ -79,7 +79,7 @@ Website: https://www.worldtrips.com
     // View
     public function show($id) {
       // retreive all records from db
-      $data = Passenger::findOrFail($id);
+      $data = Insurance::findOrFail($id);
 
       // Barcode Generate
       $barcodes = base64_encode(QrCode::format('svg')->size(108)->errorCorrection('L')->generate('

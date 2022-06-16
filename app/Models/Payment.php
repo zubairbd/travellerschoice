@@ -9,10 +9,10 @@ class Payment extends Model
 {
     use HasFactory;
 
-    public $fillable = ['passenger_id', 'account_number', 'payment_type', 'amount', 'user_id','invoice', 'trxID', 'status'];
+    protected $fillable = ['insurance_id', 'account_number', 'payment_type', 'amount', 'user_id','invoice', 'trxID', 'status'];
 
 
-    public function passenger() {
-        return $this->belongsTo(Passenger::class);
+    public function insurance() {
+        return $this->belongsTo(Insurance::class, 'insurance_id', 'id');
     }
 }

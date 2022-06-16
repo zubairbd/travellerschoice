@@ -19,7 +19,7 @@
             <tr>
               <th>#</th>
               <th>Policy No</th>
-              <th>Passenger Name</th>
+              <th>Insurance Name</th>
               <th>Passport</th>
               <th>DOB</th>
               <th>Effective</th>
@@ -29,28 +29,28 @@
             </tr>
           </thead>
           <tbody>
-            @if ($passengers)
+            @if ($Insurances)
               @php($n = 1)
-              @foreach ($passengers as $key => $passenger)
+              @foreach ($Insurances as $key => $Insurance)
                 <tr>
                   <td>
                     {{$n}}
                     @php($n++)
                   </td>
-                  <td>{{$passenger->policy_number}}</td>
-                  <td>{{$passenger->name}}</td>
-                  <td>{{$passenger->pp_number}}</td>
-                  <td>{{date('d/m/Y', strtotime($passenger->dob))}}</td>
-                  <td>{{date('d/m/Y', strtotime($passenger->effective_date))}}</td>
-                  <td>{{$passenger->destination}}</td>
-                  <td>{{$passenger->created_at->format('F d, Y')}}</td>
+                  <td>{{$Insurance->policy_number}}</td>
+                  <td>{{$Insurance->name}}</td>
+                  <td>{{$Insurance->pp_number}}</td>
+                  <td>{{date('d/m/Y', strtotime($Insurance->dob))}}</td>
+                  <td>{{date('d/m/Y', strtotime($Insurance->effective_date))}}</td>
+                  <td>{{$Insurance->destination}}</td>
+                  <td>{{$Insurance->created_at->format('F d, Y')}}</td>
                   <td>
                     <!-- Edit Button -->
-                    <a href="{{route('admin.insurances.edit',$passenger->id)}}" target="_blank" class="btn btn-info btn-xs"><i class="fa fa-eye"></i> View</a>
+                    <a href="{{route('admin.insurances.edit',$Insurance->id)}}" target="_blank" class="btn btn-info btn-xs"><i class="fa fa-eye"></i> View</a>
                     <!-- Delete Button -->
-                    <a href="{{route('admin.insurances.show',$passenger->id)}}" class="btn btn-xs btn-danger" ><i class="fa fa-download"></i> Download</a>
+                    <a href="{{route('admin.insurances.show',$Insurance->id)}}" class="btn btn-xs btn-danger" ><i class="fa fa-download"></i> Download</a>
                     <!-- create Button -->
-                    <a href="{{url('admin/insurance',$passenger->id)}}" target="_blank" class="btn btn-xs btn-warning" ><i class="fa fa-download"></i> Create</a>
+                    <a href="{{url('admin/insurance',$Insurance->id)}}" target="_blank" class="btn btn-xs btn-warning" ><i class="fa fa-download"></i> Create</a>
                     
                   </td>
                 </tr>

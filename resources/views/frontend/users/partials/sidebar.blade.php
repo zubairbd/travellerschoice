@@ -17,11 +17,11 @@
                     dashboard
                 </a>
                 </li>
-                <li><a class="@yield('purchase-insurance')" href="{{route('user.insurance.purchase')}}">
+                <li><a class="@yield('purchase-insurance')" href="{{route('user.insurance.list')}}">
                     <i class="fa fa-money-bill-alt"></i>
                     purchase history</a>
                 </li>
-                <li><a href="{{route('user.profile')}}">
+                <li><a class="@yield('manage-profile')" href="{{route('user.profile')}}">
                     <i class="fa fa-user"></i>
                     manage profile</a></li>
                 <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

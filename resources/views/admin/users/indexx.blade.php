@@ -1,12 +1,13 @@
 @extends('layouts.admin', [
-  'page_header' => 'Students',
+  'page_header' => 'Users',
   'dash' => '',
-  'quiz' => '',
   'users' => 'active',
-  'pass' => '',
-  'ins' => '',
+  'product' => '',
+  'disc' => '',
+  'comorder' => '',
+  'pandorder' => '',
   'pay' => '',
-  'sett' => ''
+  'wallet' => ''
 ])
 
 @section('content')
@@ -46,7 +47,7 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Add User</h4>
           </div>
-          {!! Form::open(['method' => 'POST', 'action' => '\App\Http\Controllers\UsersController@store']) !!}
+          {!! Form::open(['method' => 'POST', 'action' => '\App\Http\Controllers\Admin\UsersController@store']) !!}
             <div class="modal-body">
               <div class="row">
                 <div class="col-md-6">
@@ -62,12 +63,21 @@
                     {!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'eg: info@examlpe.com', 'required' => 'required']) !!}
                     <small class="text-danger">{{ $errors->first('email') }}</small>
                   </div>
+                  
+                  <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
+                    {!! Form::label('username', 'Username') !!}
+                    <span class="required">*</span>
+                    {!! Form::text('username', null, ['class' => 'form-control', 'placeholder' => 'eg: info@examlpe.com', 'required' => 'required']) !!}
+                    <small class="text-danger">{{ $errors->first('username') }}</small>
+                  </div>
+                  
                   <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                     {!! Form::label('password', 'Password') !!}
                     <span class="required">*</span>
                     {!! Form::password('password', ['class' => 'form-control', 'placeholder'=>'Enter Your Password', 'required' => 'required']) !!}
                     <small class="text-danger">{{ $errors->first('password') }}</small>
                   </div>
+                  
                   <div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
                       {!! Form::label('role', 'User Role') !!}
                       <span class="required">*</span>
@@ -76,6 +86,13 @@
                   </div>
                 </div>
                 <div class="col-md-6">
+                  
+                  <div class="form-group{{ $errors->has('organization') ? ' has-error' : '' }}">
+                    {!! Form::label('organization', 'Organization') !!}
+                    {!! Form::text('organization', null, ['class' => 'form-control', 'placeholder'=>'Enter Organization']) !!}
+                    <small class="text-danger">{{ $errors->first('organization') }}</small>
+                  </div>
+                  
                   <div class="form-group{{ $errors->has('mobile') ? ' has-error' : '' }}">
                     {!! Form::label('mobile', 'Mobile No.') !!}
                     <span class="required">*</span>
@@ -84,9 +101,15 @@
                   </div>
                   <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
                     {!! Form::label('city', 'Enter City') !!}
-                    {!! Form::text('city', null, ['class' => 'form-control', 'placeholder'=>'Enter Your City']) !!}
+                    {!! Form::text('city', null, ['class' => 'form-control', 'placeholder'=>'Enter City']) !!}
                     <small class="text-danger">{{ $errors->first('city') }}</small>
                   </div>
+                  <div class="form-group{{ $errors->has('dob') ? ' has-error' : '' }}">
+                    {!! Form::label('dob', 'Date of Birth') !!}
+                    {!! Form::text('dob', null, ['class' => 'form-control', 'placeholder' => 'eg: 01/01/1990']) !!}
+                    <small class="text-danger">{{ $errors->first('dob') }}</small>
+                  </div>
+
                   <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                     {!! Form::label('address', 'Address') !!}
                     {!! Form::textarea('address', null, ['class' => 'form-control', 'rows'=>'5', 'placeholder' => 'Enter Your address']) !!}
@@ -164,7 +187,7 @@
                             <p>Do you really want to delete these records? This process cannot be undone.</p>
                           </div>
                           <div class="modal-footer">
-                            {!! Form::open(['method' => 'DELETE', 'action' => ['\App\Http\Controllers\UsersController@destroy', $user->id]]) !!}
+                            {!! Form::open(['method' => 'DELETE', 'action' => ['\App\Http\Controllers\Admin\UsersController@destroy', $user->id]]) !!}
                                 {!! Form::reset("No", ['class' => 'btn btn-gray', 'data-dismiss' => 'modal']) !!}
                                 {!! Form::submit("Yes", ['class' => 'btn btn-danger']) !!}
                             {!! Form::close() !!}
@@ -182,7 +205,7 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Edit User </h4>
                       </div>
-                      {!! Form::model($user, ['method' => 'PATCH', 'action' => ['\App\Http\Controllers\UsersController@update', $user->id]]) !!}
+                      {!! Form::model($user, ['method' => 'PATCH', 'action' => ['\App\Http\Controllers\Admin\UsersController@update', $user->id]]) !!}
                         <div class="modal-body">
                           <div class="row">
                             <div class="col-md-6">
@@ -198,6 +221,13 @@
                                 {!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'eg: info@example.com', 'required' => 'required']) !!}
                                 <small class="text-danger">{{ $errors->first('email') }}</small>
                               </div>
+                                        
+                            <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
+                              {!! Form::label('username', 'Username') !!}
+                              <span class="required">*</span>
+                              {!! Form::text('username', null, ['class' => 'form-control', 'placeholder' => 'eg: info@examlpe.com', 'required' => 'required']) !!}
+                              <small class="text-danger">{{ $errors->first('username') }}</small>
+                            </div>
                               {{-- <label for="">Change Password: </label>
                               <input type="checkbox" name="changepass"> --}}
                               {{-- <input type="radio" value="1" name="changepass" id="ch1">&nbsp;Yes
@@ -219,9 +249,16 @@
                               </div>
                             </div>
                             <div class="col-md-6">
+                              
+                              <div class="form-group{{ $errors->has('organization') ? ' has-error' : '' }}">
+                                {!! Form::label('organization', 'Organization') !!}
+                                {!! Form::text('organization', null, ['class' => 'form-control', 'placeholder'=>'Enter Your Organization']) !!}
+                                <small class="text-danger">{{ $errors->first('organization') }}</small>
+                              </div>
+                              
+                              
                               <div class="form-group{{ $errors->has('mobile') ? ' has-error' : '' }}">
                                 {!! Form::label('mobile', 'Mobile No.') !!}
-
                                 {!! Form::text('mobile', null, ['class' => 'form-control', 'placeholder' => 'eg: +91-123-456-7890']) !!}
                                 <small class="text-danger">{{ $errors->first('mobile') }}</small>
                               </div>
@@ -229,6 +266,11 @@
                                 {!! Form::label('city', 'Enter City') !!}
                                 {!! Form::text('city', null, ['class' => 'form-control', 'placeholder'=>'Enter Your City']) !!}
                                 <small class="text-danger">{{ $errors->first('city') }}</small>
+                              </div>
+                              <div class="form-group{{ $errors->has('dob') ? ' has-error' : '' }}">
+                                {!! Form::label('dob', 'Date of Birth') !!}
+                                {!! Form::date('dob', null, ['class' => 'form-control', 'id' => 'dob', 'placeholder' => 'eg: 01/01/1990']) !!}
+                                <small class="text-danger">{{ $errors->first('dob') }}</small>
                               </div>
                               <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                                 {!! Form::label('address', 'Address') !!}
@@ -267,6 +309,17 @@
   $('#ch2').click(function(){
     $('#pass').hide();
   });
+
+  $(document).ready(function() {
+       
+      $("#dob").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "dd/mm/yy",
+        autoclose: true,
+        yearRange: '1950:2022',
+    });
+    });
 </script>
 
 @endsection

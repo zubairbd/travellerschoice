@@ -2,10 +2,12 @@
   'page_header' => 'Dashboard',
   'dash' => 'active',
   'users' => '',
-  'pass' => '',
-  'ins' => '',
+  'product' => '',
+  'disc' => '',
+  'comorder' => '',
+  'pandorder' => '',
   'pay' => '',
-  'sett' => ''
+  'wallet' => ''
 ])
 
 @section('content')
@@ -17,13 +19,13 @@
           <div class="col-md-6">
             <div class="small-box bg-yellow">
               <div class="inner">
-                <h3>{{$passenger}}</h3>
+                <h3>{{$Insurance}}</h3>
                 <p>Total Insurance</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="{{url('/admin/passengers')}}" class="small-box-footer">
+              <a href="{{url('/admin/Insurances')}}" class="small-box-footer">
                 More info <i class="fa fa-arrow-circle-right"></i>
               </a>
             </div>

@@ -51,7 +51,7 @@
                        </div>
                        <div class="services-content">
                            <div class="services-text">
-                               <h3 class="title"><a href="{{route('user.worldtrips.buy')}}">Worldtrip Insurance</a></h3>
+                               <h3 class="title"><a href="{{route('user.insurance.create')}}">Worldtrip Insurance</a></h3>
                            </div>
                            <div class="services-desc">
                                <p>
@@ -60,7 +60,7 @@
                            </div>
                        </div>
                        <div class="service-read">
-                            <a href="{{route('user.worldtrips.buy')}}">Buy Now</a>
+                            <a href="{{route('user.insurance.create')}}">Buy Now</a>
                        </div>
                    </div> 
                 </div>
@@ -73,7 +73,7 @@
                         </div>
                         <div class="services-content">
                             <div class="services-text">
-                                <h3 class="title"><a href="{{route('user.wecare.buy')}}">WeCare Insurance</a></h3>
+                                <h3 class="title"><a href="{{route('user.insurance.create')}}">WeCare Insurance</a></h3>
                             </div>
                             <div class="services-desc">
                                 <p>
@@ -82,7 +82,7 @@
                             </div>
                         </div>
                         <div class="service-read">
-                            <a href="{{route('user.wecare.buy')}}">Buy Now</a>
+                            <a href="{{route('user.insurance.create')}}">Buy Now</a>
                        </div>
                     </div> 
                  </div>

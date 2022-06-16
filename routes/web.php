@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\PaymentsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
-use App\Models\Passenger;
+use App\Models\Insurance;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,28 +41,37 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'admin']], function () {
 
     Route::get('/dashboard', function(){
-        $passenger = Passenger::count();
+        $Insurance = Insurance::count();
         $user_latest = User::where('id', '!=', Auth::id())->orderBy('created_at', 'desc')->get();
-        return view('admin.dashboard', compact('passenger','user_latest'));
+        return view('admin.dashboard', compact('Insurance','user_latest'));
     });
-    Route::resource('/users', 'App\Http\Controllers\UsersController');
-    Route::resource('/passengers', 'App\Http\Controllers\PassengerController');
-    Route::resource('/pandingorders', 'App\Http\Controllers\PandingOrderController');
-    Route::resource('/payments', 'App\Http\Controllers\PaymentController');
-    Route::get('/passenger/status/{id}/{s}', [\App\Http\Controllers\PassengerController::class, 'insStatus']);
-    Route::resource('/insurances', 'App\Http\Controllers\InsuranceController');
+    Route::resource('/users', 'App\Http\Controllers\Admin\UsersController');
+    Route::resource('/orders-completed', 'App\Http\Controllers\Admin\CompletedOrderController', ['names' => 'order_completed']);
+    Route::get('/orders-completed/status/{id}/{s}', [\App\Http\Controllers\Admin\CompletedOrderController::class, 'insStatus']);
+    Route::resource('/panding-orders', 'App\Http\Controllers\Admin\PandingOrderController', ['names' => 'order_panding']);
+    Route::get('/panding-orders/status/{id}/{s}', [\App\Http\Controllers\Admin\PandingOrderController::class, 'insStatus']);
+    Route::post('/panding-orders/import_insurances', [\App\Http\Controllers\Admin\PandingOrderController::class, 'importExcelToDB'])->name('import_insurances');
+    Route::post('/panding-orders/import_payment', [\App\Http\Controllers\Admin\PandingOrderController::class, 'paymentImportExcelToDB'])->name('import_payment');
+    
+    Route::get('/insurance-worltrip/{id}', [\App\Http\Controllers\Admin\InsurancePrintController::class, 'insurancePrintWorltrip'])->name('insurance.worltrip');
+    Route::get('/insurance-wecare/{id}', [\App\Http\Controllers\Admin\InsurancePrintController::class, 'insurancePrintWecare'])->name('insurance.wecare');
+    
+    Route::resource('/payments', 'App\Http\Controllers\Admin\PaymentsController');
+    Route::get('autocomplete', [PaymentsController::class, 'autocomplete'])->name('autocomplete');
 
-    Route::get('/insurance/{id}',  [\App\Http\Controllers\InsuranceController::class, 'weCare']);
-    Route::post('/passengers/import_passengers', [\App\Http\Controllers\PassengerController::class, 'importExcelToDB'])->name('import_passengers');
-    Route::post('/passengers/import_payment', [\App\Http\Controllers\PassengerController::class, 'paymentImportExcelToDB'])->name('import_payment');
+    Route::resource('/products', 'App\Http\Controllers\Admin\ProductController');
+    Route::resource('/discounts', 'App\Http\Controllers\Admin\DiscountController');
 
-    Route::post('/passengers/destroy', [\App\Http\Controllers\DestroyAllController::class, 'AllPassengerDestroy']);
-    Route::post('/passengers/download', [\App\Http\Controllers\DestroyAllController::class, 'AllPassengerDownload']);
-
-
-    Route::get('/wallets',  [\App\Http\Controllers\WalletsController::class, 'walletsIndex'])->name('wallets.index');
-    Route::get('/wallets/status/{id}/{s}',  [\App\Http\Controllers\WalletsController::class, 'walletsStatus']);
-    Route::get('/wallets/edit/{id}',  [\App\Http\Controllers\WalletsController::class, 'walletsEdit'])->name('wallets.edit');
+    Route::get('/wallets',  [\App\Http\Controllers\Admin\WalletController::class, 'walletsIndex'])->name('wallets.index');
+    Route::get('/wallets/status/{id}/{s}',  [\App\Http\Controllers\Admin\WalletController::class, 'walletsStatus']);
+    Route::get('/wallets/edit/{id}',  [\App\Http\Controllers\Admin\WalletController::class, 'walletsEdit'])->name('wallets.edit');
+    
+    // Route::resource('/profile', 'App\Http\Controllers\Admin\ProfileController');
+    
+    Route::get('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('profile');
+    Route::post('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/changepassword', [App\Http\Controllers\Admin\ProfileController::class, 'changePassword'])->name('profile.changepassword');
+    
 });
 
 // User Route
@@ -71,20 +81,22 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => ['auth', 'use
     Route::patch('/profile', [\App\Http\Controllers\User\DashboardController::class, 'userProfileupdate'])->name('profile.update');
     //Insurance
     Route::resource('/insurances', 'App\Http\Controllers\User\InsuranceController');
-    Route::get('/travel-insurance', [\App\Http\Controllers\User\InsuranceController::class, 'travelInsurance'])->name('insurance.create');
-    Route::get('/travel-insurance/worldtrips', [\App\Http\Controllers\User\InsuranceController::class, 'worldtripsBuy'])->name('worldtrips.buy');
-    Route::post('/travel-insurance/worldtrips', [\App\Http\Controllers\User\InsuranceController::class, 'worldtripsGet'])->name('worldtrips.get');
+    Route::get('/apply-insurance', [\App\Http\Controllers\User\InsuranceController::class, 'travelInsurance'])->name('insurance.create');
     
     Route::get('/travel-insurance/wecare', [\App\Http\Controllers\User\InsuranceController::class, 'wecareBuy'])->name('wecare.buy');
     Route::post('/travel-insurance/wecare', [\App\Http\Controllers\User\InsuranceController::class, 'wecareGet'])->name('wecare.get');
     
     
-    Route::get('/purchase-insurance', [\App\Http\Controllers\User\InsuranceController::class, 'purchaseInsurance'])->name('insurance.purchase');
+    Route::get('/purchase-list', [\App\Http\Controllers\User\InsuranceController::class, 'purchaseInsurance'])->name('insurance.list');
     Route::get('/insurance/1/{id}', [\App\Http\Controllers\User\InsuranceController::class, 'wecareInsurance'])->name('insurance.wecare');
     Route::get('/insurance/2/{id}', [\App\Http\Controllers\User\InsuranceController::class, 'worldtripsInsurance'])->name('insurance.worldtrips');
     
     Route::get('/insurance/pay/{pp_number}', [\App\Http\Controllers\User\InsuranceController::class, 'insurancePayment'])->name('insurance.payment');
     Route::post('/insurance/pay/submit', [\App\Http\Controllers\User\InsuranceController::class, 'insurancePaymentsubmit'])->name('insurance.payment.submit');
+    
+    // Route::get('/travel-insurance/worldtrips', [\App\Http\Controllers\User\InsuranceController::class, 'worldtripsBuy'])->name('worldtrips.buy');
+    // Route::post('/travel-insurance/worldtrips', [\App\Http\Controllers\User\InsuranceController::class, 'worldtripsGet'])->name('worldtrips.get');
+    
 });
 
 
@@ -106,10 +118,14 @@ Route::group(['prefix' => 'agent', 'as' => 'agent.', 'middleware' => ['auth', 'a
     Route::get('/wallet', [\App\Http\Controllers\Agent\WalletController::class, 'walletIndex'])->name('wallet.index');
     Route::get('/wallet/deposit', [\App\Http\Controllers\Agent\WalletController::class, 'walletDeposit'])->name('wallet.deposit');
     Route::post('/wallet/deposit/store', [\App\Http\Controllers\Agent\WalletController::class, 'walletDepositStore'])->name('wallet.deposit.store');
+    
+    Route::resource('/profile', 'App\Http\Controllers\Agent\ProfileController');
+    Route::post('/profile/changepassword', [App\Http\Controllers\Agent\ProfileController::class, 'changePassword'])->name('profile.changepassword');
+    Route::post('/profile/photo', [\App\Http\Controllers\Agent\ProfileController::class, 'imageUpload'])->name('profile.photo');
    
 });
 
-Route::resource('orders', 'App\Http\Controllers\Bkash\OrderController');
+
 Route::post('token', [\App\Http\Controllers\Bkash\PaymentController::class, 'token'])->name('token');
 Route::get('createpayment', [\App\Http\Controllers\Bkash\PaymentController::class, 'createpayment'])->name('createpayment');
 Route::get('executepayment', [\App\Http\Controllers\Bkash\PaymentController::class, 'executepayment'])->name('executepayment');

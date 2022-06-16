@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Passenger;
+use App\Models\Insurance;
 use Illuminate\Http\Request;
 
 class DestroyAllController extends Controller
 {
     //
-    public function AllPassengerDestroy()
+    public function AllInsuranceDestroy()
     {
-      Passenger::getQuery()->delete();
+      Insurance::getQuery()->delete();
       // User::where('role', '!=', 'A')->truncate();
-      return back()->with('deleted', 'All Passenger Has Been Deleted');
+      return back()->with('deleted', 'All Insurance Has Been Deleted');
     }
 
-    public function AllPassengerDownload()
+    public function AllInsuranceDownload()
     {
-      Passenger::getQuery()->delete();
+      Insurance::getQuery()->delete();
       // User::where('role', '!=', 'A')->truncate();
-      return back()->with('deleted', 'All Passenger Has Been Deleted');
+      return back()->with('deleted', 'All Insurance Has Been Deleted');
     }
 }

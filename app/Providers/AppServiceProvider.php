@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -30,7 +31,8 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('*', function ($view)
         {
             $auth = Auth::user();
-            $view->with(['auth' => $auth,]);
+            $setting = Setting::whereId(1)->first();
+            $view->with(['auth' => $auth, 'setting' => $setting,]);
         });
     }
 }

@@ -1,11 +1,13 @@
 @extends('layouts.admin', [
-  'page_header' => 'Students',
+  'page_header' => 'Panding Orders',
   'dash' => '',
   'users' => '',
-  'pass' => '',
-  'ins' => '',
+  'product' => '',
+  'disc' => '',
+  'comorder' => '',
+  'pandorder' => 'active',
   'pay' => '',
-  'sett' => ''
+  'wallet' => ''
 ])
 
 @section('styles')
@@ -20,33 +22,12 @@
 @include('message')
   @if ($auth->role == 'A')
     <div class="margin-bottom">
-      <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#createModal">Add Passenger</button>
-      <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#importPassenger">Import Passengers</button>
-      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#AllDeleteModal">Delete All Passengers</button>
-      <a href="{{route('admin.passengers.create')}}" class="btn btn-warning">Create</a>
+      <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#createModal">Add Insurance</button>
+      <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#importInsurance">Import Insurances</button>
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#AllDeleteModal">Delete All Insurances</button>
+      
     </div>
-    <!-- All Delete Button -->
-    <div id="AllDeleteModal" class="delete-modal modal fade" role="dialog">
-      <!-- All Delete Modal -->
-      <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <div class="delete-icon"></div>
-          </div>
-          <div class="modal-body text-center">
-            <h4 class="modal-heading">Are You Sure ?</h4>
-            <p>Do you really want to delete "All these records"? This process cannot be undone.</p>
-          </div>
-          <div class="modal-footer">
-            {!! Form::open(['method' => 'POST', 'action' => '\App\Http\Controllers\DestroyAllController@AllPassengerDestroy']) !!}
-                {!! Form::reset("No", ['class' => 'btn btn-gray', 'data-dismiss' => 'modal']) !!}
-                {!! Form::submit("Yes", ['class' => 'btn btn-danger']) !!}
-            {!! Form::close() !!}
-          </div>
-        </div>
-      </div>
-    </div>
+   
     <!-- Create Modal -->
     <div id="createModal" class="modal fade" role="dialog">
       <div class="modal-dialog modal-lg">
@@ -55,7 +36,7 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Add Insurance</h4>
           </div>
-          {!! Form::open(['method' => 'POST', 'action' => '\App\Http\Controllers\PassengerController@store']) !!}
+          {!! Form::open(['method' => 'POST', 'action' => '\App\Http\Controllers\Admin\PandingOrderController@store']) !!}
             <div class="modal-body">
               <div class="row">
                 <div class="col-md-6">
@@ -77,16 +58,10 @@
                     {!! Form::text('dob', null, ['class' => 'form-control datepicker', 'id' => 'dob', 'placeholder' => '01/01/1997', 'required' => 'required']) !!}
                     <small class="text-danger">{{ $errors->first('dob') }}</small>
                   </div>
-                  {{-- <div class="form-group{{ $errors->has('policy_number') ? ' has-error' : '' }}">
-                    {!! Form::label('policy_number', 'Policy Number') !!}
-                    <span class="required">*</span>
-                    {!! Form::text('policy_number', null, ['class' => 'form-control', 'placeholder' => 'eg: AB1234567', 'required' => 'required']) !!}
-                    <small class="text-danger">{{ $errors->first('policy_number') }}</small>
-                  </div> --}}
                   <div class="form-group{{ $errors->has('insurance_type') ? ' has-error' : '' }}">
                     {!! Form::label('insurance_type', 'Insurance Type') !!}
 
-                    {!! Form::select('insurance_type', ['Worldtrips' => 'Worldtrips', 'WeCare'=>'WeCare', 'Dubai Insurance'=>'DubaiInsurance'], null, ['class' => 'form-control select2', 'required' => 'required']) !!}
+                    {!! Form::select('insurance_type', $products, null, ['class' => 'form-control select2', 'required' => 'required']) !!}
                     <small class="text-danger">{{ $errors->first('destination') }}</small>
                   </div>
 
@@ -113,7 +88,7 @@
                     <small class="text-danger">{{ $errors->first('termination_date') }}</small>
                   </div>
                  
-                <div class="form-group{{ $errors->has('creator') ? ' has-error' : '' }}">
+                  <div class="form-group{{ $errors->has('creator') ? ' has-error' : '' }}">
                     {!! Form::label('creator', 'User') !!}
 
                     {!! Form::select('creator', $users, null, ['class' => 'form-control select2', 'required' => 'required']) !!}
@@ -133,19 +108,19 @@
         </div>
       </div>
     </div>
-    <!-- Import Passenger Modal -->
-  <div id="importPassenger" class="modal fade" role="dialog">
+    <!-- Import Insurance Modal -->
+  <div id="importInsurance" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Import Passengers (Excel File With Exact Header of DataBase Field)</h4>
+          <h4 class="modal-title">Import Insurances (Excel File With Exact Header of DataBase Field)</h4>
         </div>
-        {!! Form::open(['method' => 'POST', 'action' => '\App\Http\Controllers\PassengerController@importExcelToDB', 'files' => true]) !!}
+        {!! Form::open(['method' => 'POST', 'action' => '\App\Http\Controllers\Admin\PandingOrderController@importExcelToDB', 'files' => true]) !!}
           <div class="modal-body">
             {{-- {!! Form::hidden('topic_id', $topic->id) !!} --}}
             <div class="form-group{{ $errors->has('file') ? ' has-error' : '' }}">
-              {!! Form::label('file', 'Import Passengers Via Excel File', ['class' => 'col-sm-3 control-label']) !!}
+              {!! Form::label('file', 'Import Insurances Via Excel File', ['class' => 'col-sm-3 control-label']) !!}
               <span class="required">*</span>
               <div class="col-sm-9">
                 {!! Form::file('file', ['required' => 'required']) !!}
@@ -171,7 +146,7 @@
             <tr>
               <th>#</th>
               <th>Policy No</th>
-              <th>Passenger Name</th>
+              <th>Insurance Name</th>
               <th>Passport</th>
               <th>Effective</th>
               <th>Destination</th>
@@ -181,21 +156,21 @@
             </tr>
           </thead>
           <tbody>
-            @if ($passengers)
+            @if ($insurances)
               @php($n = 1)
-              @foreach ($passengers as $key => $passenger)
+              @foreach ($insurances as $key => $insurance)
                 <tr>
                   <td>
                     {{$n}}
                     @php($n++)
                   </td>
-                  <td>{{$passenger->policy_number}}</td>
-                  <td>{{$passenger->name}}</td>
-                  <td>{{$passenger->pp_number}}</td>
-                  <td>{{date('d/m/Y', strtotime($passenger->effective_date))}}</td>
-                  <td>{{$passenger->destination}}</td>
+                  <td>{{$insurance->policy_number}}</td>
+                  <td>{{$insurance->name}}</td>
+                  <td>{{$insurance->pp_number}}</td>
+                  <td>{{date('d/m/Y', strtotime($insurance->effective_date))}}</td>
+                  <td>{{$insurance->destination}}</td>
                   <td>
-                    @if (!empty($passenger->payments->passenger_id))
+                    @if (!empty($insurance->payments->insurance_id))
                     <span class="btn btn-success btn-xs">Paid</span>
                     @else
                     <span class="btn btn-danger btn-xs">Unpaid</span>
@@ -207,14 +182,14 @@
                       <span class="slider round"></span>
                     </label> --}}
                     {{-- <input type="checkbox" checked data-toggle="toggle" data-on="" data-off="" data-onstyle="success" data-offstyle="danger" data-style="ios"> --}}
-                    <input class="toggle-class" type="checkbox" data-size="mini" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" id="insStatus" data-id="{{$passenger->id}}" {{ $passenger->status ? 'checked' : '' }}>
+                    <input class="toggle-class" type="checkbox" data-size="mini" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" id="insStatus" data-id="{{$insurance->id}}" {{ $insurance->status ? 'checked' : '' }}>
                   </td>
                   <td>
                     <!-- Edit Button -->
-                    <a type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#{{$passenger->id}}EditModal"><i class="fa fa-edit"></i> Edit</a>
+                    <a type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#{{$insurance->id}}EditModal"><i class="fa fa-edit"></i> Edit</a>
                     <!-- Delete Button -->
-                    <a type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#{{$passenger->id}}deleteModal"><i class="fa fa-close"></i> Delete</a>
-                    <div id="{{$passenger->id}}deleteModal" class="delete-modal modal fade" role="dialog">
+                    <a type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#{{$insurance->id}}deleteModal"><i class="fa fa-close"></i> Delete</a>
+                    <div id="{{$insurance->id}}deleteModal" class="delete-modal modal fade" role="dialog">
                       <!-- Delete Modal -->
                       <div class="modal-dialog modal-sm">
                         <div class="modal-content">
@@ -227,7 +202,7 @@
                             <p>Do you really want to delete these records? This process cannot be undone.</p>
                           </div>
                           <div class="modal-footer">
-                            {!! Form::open(['method' => 'DELETE', 'action' => ['\App\Http\Controllers\PassengerController@destroy', $passenger->id]]) !!}
+                            {!! Form::open(['method' => 'DELETE', 'action' => ['\App\Http\Controllers\Admin\PandingOrderController@destroy', $insurance->id]]) !!}
                                 {!! Form::reset("No", ['class' => 'btn btn-gray', 'data-dismiss' => 'modal']) !!}
                                 {!! Form::submit("Yes", ['class' => 'btn btn-danger']) !!}
                             {!! Form::close() !!}
@@ -238,14 +213,14 @@
                   </td>
                 </tr>
                 <!-- edit model -->
-                <div id="{{$passenger->id}}EditModal" class="modal fade" role="dialog">
+                <div id="{{$insurance->id}}EditModal" class="modal fade" role="dialog">
                   <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Edit Insurance </h4>
                       </div>
-                      {!! Form::model($passenger, ['method' => 'PATCH', 'action' => ['\App\Http\Controllers\PassengerController@update', $passenger->id]]) !!}
+                      {!! Form::model($insurance, ['method' => 'PATCH', 'action' => ['\App\Http\Controllers\Admin\CompletedOrderController@update', $insurance->id]]) !!}
                         <div class="modal-body">
                           <div class="row">
                             <div class="col-md-6">
@@ -307,8 +282,8 @@
                               <div class="form-group{{ $errors->has('insurance_type') ? ' has-error' : '' }}">
                                 {!! Form::label('insurance_type', 'Insurance Type') !!}
             
-                                {!! Form::select('insurance_type', ['Worldtrips' => 'Worldtrips', 'WeCare'=>'WeCare', 'Dubai Insurance'=>'DubaiInsurance'], null, ['class' => 'form-control select2', 'required' => 'required']) !!}
-                                <small class="text-danger">{{ $errors->first('destination') }}</small>
+                                {!! Form::select('insurance_type', $products, null, ['class' => 'form-control select2', 'required' => 'required']) !!}
+                                <small class="text-danger">{{ $errors->first('insurance_type') }}</small>
                               </div>
                               
 
@@ -383,13 +358,13 @@ $(document).ready(function() {
   // $(function() {
   //   $('.toggle-class').change(function() {
   //       var status = $(this).prop('checked') == true ? 1 : 0; 
-  //       var passenger_id = $(this).data('id'); 
+  //       var Insurance_id = $(this).data('id'); 
          
   //       $.ajax({
   //           type: "GET",
   //           dataType: "json",
-  //           url: 'passenger/status',
-  //           data: {'status': status, 'passenger_id': passenger_id},
+  //           url: 'Insurance/status',
+  //           data: {'status': status, 'Insurance_id': Insurance_id},
   //           success: function(data){
   //             console.log(data);
   //             if(data.status == 'success') {
@@ -413,7 +388,7 @@ $(document).ready(function() {
   //   console.log(status);
   //   // $.ajax({
   //   //   method: "get",
-  //   //   url: "passenger/status/"+id+"/"+status,
+  //   //   url: "Insurance/status/"+id+"/"+status,
   //   //   success: function (response) {
   //   //     console.log(response);
   //   //   }
@@ -431,7 +406,7 @@ $(document).ready(function() {
     
     $.ajax({
       method: "get",
-      url: "passenger/status/"+id+"/"+status,
+      url: "panding-orders/status/"+id+"/"+status,
       success: function (response) {
         console.log(response);
       }

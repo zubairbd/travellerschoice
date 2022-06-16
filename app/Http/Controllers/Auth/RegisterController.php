@@ -93,6 +93,6 @@ class RegisterController extends Controller
             'role'=> 'AG',
         ]);
 
-        return back()->with('added', 'Passenger has been added');
+        return back()->with('added', 'Insurance has been added');
     }
 }

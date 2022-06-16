@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
-use App\Models\Passenger;
+use App\Models\Insurance;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +26,7 @@ class DashboardController extends Controller
     {
         $currentuserid = Auth::user()->id;
         
-        $insuranceList = Passenger::where('creator', $currentuserid)->orderBy('id', 'DESC')->get();
+        $insuranceList = Insurance::where('creator', $currentuserid)->orderBy('id', 'DESC')->get();
         return view('frontend.agents.insurance-list', compact('insuranceList'));
     }
 
@@ -49,25 +49,26 @@ class DashboardController extends Controller
             'pp_number' => 'required',
             'dob' => 'required',
             'effective_date' => 'required',
-            'policy_number' => 'unique:passengers,policy_number',
+            'termination_date' => 'required',
+            'policy_number' => 'unique:insurances,policy_number',
           ]);
         $randomId       =   rand(2,9);
-        $passengerId = IdGenerator::generate(['table' => 'passengers', 'reset_on_prefix_change' => true,'field'=>'policy_number', 'length' => 8, 'prefix' =>'VS12']);
-        $weCare = IdGenerator::generate(['table' => 'passengers', 'reset_on_prefix_change' => true,'field'=>'policy_number', 'length' => 9, 'prefix' =>'WC-93']);
+        $insuranceId = IdGenerator::generate(['table' => 'insurances', 'reset_on_prefix_change' => true,'field'=>'policy_number', 'length' => 8, 'prefix' =>'VS12']);
+        $weCare = IdGenerator::generate(['table' => 'insurances', 'reset_on_prefix_change' => true,'field'=>'policy_number', 'length' => 9, 'prefix' =>'WC-93']);
 
         // $formattedDate = Carbon::parse($request->effective_date)->format('dd-mm-yy');
         // $newDateFormat3 = \Carbon\Carbon::parse($request->effective_date)->format('dd/mm/yyyy');
         
         // $input['effective_date'] = $newDateFormat3;
         if($request->insurance_type == 'Worldtrips'){
-            $input['policy_number'] =  $passengerId.$randomId;
+            $input['policy_number'] =  $insuranceId.$randomId;
         }elseif($request->insurance_type == 'WeCare'){
             $input['policy_number'] = $weCare.$randomId;
         }
 
         $input['creator'] = Auth::user()->id;
-        $passenger = Passenger::create($input);
-        $payID = $passenger->pp_number;
+        $insurance = Insurance::create($input);
+        $payID = $insurance->pp_number;
         return redirect()->route('agent.insurance.payment', $payID)->with('success', 'Travel Insurance applyed successfully! Please payment for download insurance certificate');
     }
 
@@ -79,8 +80,8 @@ class DashboardController extends Controller
     public function insuranceWorltrip($id)
     {
          // retreive all records from db
-      //$data = Passenger::findOrFail($id);
-      $data = Passenger::where('pp_number','=',$id)->first();
+      //$data = Insurance::findOrFail($id);
+      $data = Insurance::where('policy_number','=',$id)->first();
 
       // Barcode Generate
       $barcodes = base64_encode(QrCode::format('svg')->size(108)->errorCorrection('L')->generate('
@@ -110,7 +111,7 @@ Website: https://www.worldtrips.com
 
 public function insuranceWecare($id){
         
-    $data = Passenger::where('pp_number','=',$id)->first();
+    $data = Insurance::where('policy_number','=',$id)->first();
 
     // Barcode Generate
     $barcodes = base64_encode(QrCode::format('svg')->size(108)->errorCorrection('L')->generate('

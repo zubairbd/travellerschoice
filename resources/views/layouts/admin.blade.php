@@ -14,6 +14,7 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="{{asset('admin/css/bootstrap.min.css')}}">
   <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
   <link rel="stylesheet" href="{{asset('admin/css/font-awesome.min.css')}}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="{{asset('admin/css/ionicons.min.css')}}">
@@ -37,7 +38,15 @@
   <link rel="stylesheet" href="{{ asset('admin/css/admin.css') }}">
 
   @yield('styles')
-
+    <style>
+      .content-header {
+        position: relative;
+        padding: 15px 15px 15px 15px;
+      }
+      .box-img {
+        width: 100px;
+      }
+    </style>
 </head>
 <body class="hold-transition skin-black sidebar-mini">
 @if ($auth)
@@ -45,12 +54,12 @@
   <!-- Main Header -->
   <header class="main-header">
     <!-- Logo -->
-    {{-- <a href="{{url('/')}}" class="logo" title="{{$setting->welcome_txt}}"> --}}
+    <a href="{{url('/')}}" class="logo" title="{{$setting->welcome_txt}}">
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg">
-        {{-- @if ($setting)
+        @if ($setting)
         <img src="{{asset('/admin/images/logo/'.$setting->logo)}}" class="ad-logo img-responsive" alt="{{$setting->welcome_txt}}">
-        @endif --}}
+        @endif
       </span>
     </a>
     <!-- Header Navbar -->
@@ -73,7 +82,7 @@
             </a>
             <ul class="dropdown-menu">
               <!-- Menu Body -->
-              <li><a href="{{url('/admin/profile')}}" title="Profile">Profile</a></li>
+              <li><a href="{{route('admin.profile')}}" title="Profile">Profile</a></li>
               <li>
                 <a href="{{ route('logout') }}" title="Logout"
                     onclick="event.preventDefault();
@@ -107,12 +116,12 @@
           <!-- Optionally, you can add icons to the links -->
           <li class="{{$dash}}"><a href="{{url('/admin/dashboard')}}" title="Dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
           <li class="{{$users}}"><a href="{{url('/admin/users')}}" title="Users"><i class="fa fa-users"></i> <span>Users</span></a></li>
-          <li class="{{$pass}}"><a href="{{url('/admin/passengers')}}" title="Orders Completed"><i class="fa fa-users"></i> <span>Orders Completed</span></a></li>
-          <li class="@yield('pandingord')"><a href="{{url('/admin/pandingorders')}}" title="Panding Orders"><i class="fa fa-users"></i> <span>Panding Orders</span></a></li>
-          <li class="@yield('wallets')"><a href="{{url('/admin/wallets')}}" title="Wallets"><i class="fa fa-users"></i> <span>Wallets</span></a></li>
-          <li class="{{$pay}}"><a href="{{url('/admin/payments')}}" title="Payments"><i class="fa fa-users"></i> <span>Payments</span></a></li>
-          <li class="{{$ins}}"><a href="{{url('/admin/insurances')}}" title="Policy"><i class="fa fa-users"></i> <span>Policy</span></a></li>
-      
+          <li class="{{$product}}"><a href="{{route('admin.products.index')}}" title="Product"><i class="fa fa-shop"></i> <span>Product</span></a></li>
+          <li class="{{$disc}}"><a href="{{route('admin.discounts.index')}}" title="Discount"><i class="fa fa-percent"></i> <span>Discount</span></a></li>
+          <li class="{{$comorder}}"><a href="{{route('admin.order_completed.index')}}" title="Orders Completed"><i class="fa fa-cart-plus"></i> <span>Orders Completed</span></a></li>
+          <li class="{{$pandorder}}"><a href="{{route('admin.order_panding.index')}}" title="Panding Orders"><i class="fa fa-shopping-cart"></i> <span>Panding Orders</span></a></li>
+          <li class="{{$pay}}"><a href="{{url('/admin/payments')}}" title="Payments"><i class="fa fa-money-bill"></i> <span>Payments</span></a></li>
+          <li class="{{$wallet}}"><a href="{{url('/admin/wallets')}}" title="Wallets"><i class="fa fa-wallet"></i> <span>Wallets</span></a></li>
 
         @elseif ($auth->role == 'S')
           
@@ -136,11 +145,21 @@
       <div class="alert alert-danger sessionmodal">
         {{session('deleted')}}
       </div>
+    @elseif (Session::has('error'))
+      <div class="alert alert-danger sessionmodal">
+        {{session('error')}}
+      </div>
+      @elseif ($errors->any())
+                    @foreach ($errors->all() as $error)
+                    <div class="alert alert-danger sessionmodal" role="alert">{{$error}}</div>
+                    @endforeach
+               
     @endif
+    
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        {{-- {{$page_header}} --}}
+        {{$page_header}}
         {{-- <small>Optional description</small> --}}
       </h1>
     </section>

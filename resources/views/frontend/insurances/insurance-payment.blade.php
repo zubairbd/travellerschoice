@@ -53,15 +53,15 @@
                         @csrf --}}
                         <fieldset>
                             <div class="row">
-                                <input class="from-control" type="hidden" name="passenger_id" value="{{$passenger->id}}">
+                                <input class="from-control" type="hidden" name="Insurance_id" value="{{$Insurance->id}}">
                                 <div class="col-lg-12 mb-30 col-md-12 col-sm-12">
-                                    <input class="from-control invoice" type="text" value="{{$passenger->policy_number}}" placeholder="Name" disabled>
+                                    <input class="from-control invoice" type="text" value="{{$Insurance->policy_number}}" placeholder="Name" disabled>
                                 </div> 
                                 <div class="col-lg-6 mb-30 col-md-6 col-sm-6">
-                                    <input class="from-control" type="text" value="{{$passenger->name}}" placeholder="Name" disabled>
+                                    <input class="from-control" type="text" value="{{$Insurance->name}}" placeholder="Name" disabled>
                                 </div> 
                                 <div class="col-lg-6 mb-30 col-md-6 col-sm-6">
-                                    <input class="from-control" type="text" value="{{$passenger->pp_number}}" disabled>
+                                    <input class="from-control" type="text" value="{{$Insurance->pp_number}}" disabled>
                                 </div>
                                 <div class="col-lg-6 mb-30 col-md-6 col-sm-6">
                                     <input class="from-control amount" type="text" name="amount" value="300" disabled>

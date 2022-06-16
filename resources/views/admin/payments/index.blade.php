@@ -1,11 +1,13 @@
 @extends('layouts.admin', [
-  'page_header' => 'Students',
+  'page_header' => 'Payments',
   'dash' => '',
   'users' => '',
-  'pass' => '',
-  'ins' => '',
+  'product' => '',
+  'disc' => '',
+  'comorder' => '',
+  'pandorder' => '',
   'pay' => 'active',
-  'sett' => ''
+  'wallet' => ''
 ])
 
 @section('styles')
@@ -20,42 +22,66 @@
 @include('message')
   @if ($auth->role == 'A')
     <div class="margin-bottom">
-      <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#createModal">Add Passenger</button>
+      <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#createModal">Add Insurance</button>
       <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#importPayment">Import Payment</button>
-      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#AllDeleteModal">Delete All Passengers</button>
-      <a href="{{route('admin.passengers.create')}}" class="btn btn-warning">Create</a>
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#AllDeleteModal">Delete All Insurances</button>
+      <a href="{{route('admin.payments.create')}}" class="btn btn-warning">Create Payment</a>
     </div>
-      <!-- Import Payment Modal -->
-      <div id="importPayment" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Import Payment (Excel File With Exact Header of DataBase Field)</h4>
-            </div>
-            {!! Form::open(['method' => 'POST', 'action' => '\App\Http\Controllers\PassengerController@paymentImportExcelToDB', 'files' => true]) !!}
-              <div class="modal-body">
-                {{-- {!! Form::hidden('topic_id', $topic->id) !!} --}}
-                <div class="form-group{{ $errors->has('file') ? ' has-error' : '' }}">
-                  {!! Form::label('file', 'Import Payment Via Excel File', ['class' => 'col-sm-3 control-label']) !!}
-                  <span class="required">*</span>
-                  <div class="col-sm-9">
-                    {!! Form::file('file', ['required' => 'required']) !!}
-                    <p class="help-block">Only Excel File (.CSV and .XLS)</p>
-                    <small class="text-danger">{{ $errors->first('file') }}</small>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <div class="btn-group pull-right">
-                  {!! Form::reset("Reset", ['class' => 'btn btn-default']) !!}
-                  {!! Form::submit("Import", ['class' => 'btn btn-wave']) !!}
-                </div>
-              </div>
-            {!! Form::close() !!}
+    <!-- Create Modal -->
+    <div id="createModal" class="modal fade" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Add Product</h4>
           </div>
+          {!! Form::open(['method' => 'POST', 'action' => '\App\Http\Controllers\Admin\PaymentsController@store']) !!}
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                    {!! Form::label('name', 'Product Name') !!}
+                    <span class="required">*</span>
+                    {!! Form::text('name', null, ['class' => 'form-control typeahead', 'required' => 'required', 'placeholder' => 'Enter product name']) !!}
+                    <small class="text-danger">{{ $errors->first('name') }}</small>
+                  </div>
+                  
+                  <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+                    {!! Form::label('description', 'Description') !!}
+                    {!! Form::textarea('description', null, ['class' => 'form-control', 'rows'=>'5', 'placeholder' => 'Enter Your address']) !!}
+                    <small class="text-danger">{{ $errors->first('description') }}</small>
+                  </div>
+
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group{{ $errors->has('price') ? ' has-error' : '' }}">
+                    {!! Form::label('price', 'Price') !!}
+                    <span class="required">*</span>
+                    {!! Form::text('price', null, ['class' => 'form-control', 'placeholder' => 'eg: 1234', 'required' => 'required']) !!}
+                    <small class="text-danger">{{ $errors->first('price') }}</small>
+                  </div>
+
+                  <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+                    {!! Form::label('status', 'Status') !!}
+
+                    {!! Form::select('status', [1 => 'Active', 0 => 'Inactive'], null, ['class' => 'form-control select2', 'required' => 'required']) !!}
+                    <small class="text-danger">{{ $errors->first('status') }}</small>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <div class="btn-group pull-right">
+                {!! Form::reset("Reset", ['class' => 'btn btn-default']) !!}
+                {!! Form::submit("Add", ['class' => 'btn btn-wave']) !!}
+              </div>
+            </div>
+          {!! Form::close() !!}
         </div>
       </div>
+    </div>
+    
     <div class="content-block box">
       <div class="box-body table-responsive">
         <table id="example1" class="table table-striped">
@@ -63,7 +89,7 @@
             <tr>
               <th>#</th>
               <th>Policy No</th>
-              <th>Passenger Name</th>
+              <th>Insurance Name</th>
               <th>Passport</th>
               <th>Pay From</th>
               <th>Pay Type</th>
@@ -81,9 +107,9 @@
                     {{$n}}
                     @php($n++)
                   </td>
-                  <td>{{$payment->passenger->policy_number}}</td>
-                  <td>{{$payment->passenger->name}}</td>
-                  <td>{{$payment->passenger->pp_number}}</td>
+                  <td>{{$payment->insurance->policy_number}}</td>
+                  <td>{{$payment->insurance->name}}</td>
+                  <td>{{$payment->insurance->pp_number}}</td>
                   <td>{{$payment->account_number}}</td>
                   <td>{{$payment->payment_type}}</td>
                   <td>{{$payment->created_at->format('F d, Y - h:m a')}}</td>
@@ -107,7 +133,7 @@
                             <p>Do you really want to delete these records? This process cannot be undone.</p>
                           </div>
                           <div class="modal-footer">
-                            {!! Form::open(['method' => 'DELETE', 'action' => ['\App\Http\Controllers\PaymentController@destroy', $payment->id]]) !!}
+                            {!! Form::open(['method' => 'DELETE', 'action' => ['\App\Http\Controllers\Admin\PaymentsController@destroy', $payment->id]]) !!}
                                 {!! Form::reset("No", ['class' => 'btn btn-gray', 'data-dismiss' => 'modal']) !!}
                                 {!! Form::submit("Yes", ['class' => 'btn btn-danger']) !!}
                             {!! Form::close() !!}
@@ -125,7 +151,7 @@
                       <button type="button" class="close" data-dismiss="modal">&times;</button>
                       <h4 class="modal-title">Edit Payment </h4>
                     </div>
-                    {!! Form::model($payment, ['method' => 'PATCH', 'action' => ['\App\Http\Controllers\PaymentController@update', $payment->id]]) !!}
+                    {!! Form::model($payment, ['method' => 'PATCH', 'action' => ['\App\Http\Controllers\Admin\PaymentsController@update', $payment->id]]) !!}
                       <div class="modal-body">
                         <div class="row">
                           <div class="col-md-6">
@@ -139,12 +165,30 @@
                             <div class="form-group{{ $errors->has('payment_type') ? ' has-error' : '' }}">
                               {!! Form::label('payment_type', 'Destination') !!}
 
-                              {!! Form::select('payment_type', ['Bkash' => 'Bkash', 'Rocket'=>'Rocket', 'Nagad'=>'Nagad', 'Upay'=>'Upay', 'Ucash'=>'Ucash'], null, ['class' => 'form-control select2', 'required' => 'required']) !!}
+                              {!! Form::select('payment_type', ['Wallet' => 'Wallet', 'Bkash' => 'Bkash', 'Rocket'=>'Rocket', 'Nagad'=>'Nagad', 'Upay'=>'Upay', 'Ucash'=>'Ucash'], null, ['class' => 'form-control select2', 'required' => 'required']) !!}
                               <small class="text-danger">{{ $errors->first('payment_type') }}</small>
                             </div>
+
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group{{ $errors->has('amount') ? ' has-error' : '' }}">
+                              {!! Form::label('amount', 'Amount') !!}
+
+                              {!! Form::text('amount', null, ['class' => 'form-control', 'id' => 'amount', 'placeholder' => '']) !!}
+                              <small class="text-danger">{{ $errors->first('amount') }}</small>
+                            </div>
+
+                            <div class="form-group{{ $errors->has('policy_number') ? ' has-error' : '' }}">
+                              {!! Form::label('policy_number', 'Policy Number') !!}
+
+                              {!! Form::text('policy_number', 'policy_number.id', ['class' => 'form-control', 'id' => 'policy_number', 'placeholder' => '']) !!}
+                              <small class="text-danger">{{ $errors->first('policy_number') }}</small>
+                            </div>
+
                             
 
                           </div>
+
                         </div>
                       </div>
                       <div class="modal-footer">
@@ -168,69 +212,8 @@
 <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" ></script> --}}
 <script>
-  $('#ch1').click(function(){
-    $('#pass').show();
-  });
-
-  $('#ch2').click(function(){
-    $('#pass').hide();
-  });
 
 //jQuery Datepicker adding days
-$(document).ready(function() {
-    $("#effective_date").datepicker({
-        changeMonth: true,
-        showOtherMonths: true,
-        selectOtherMonths: true,
-        format: "dd/mm/yyyy",
-        autoclose: true,
-        onSelect: function(selectedDate) {
-            //$("#cal4").datepicker("setDate", selectedDate);
-            var date = $(this).datepicker("getDate");
-            date.setDate(date.getDate() + 29);
-            $("#termination_date").datepicker("setDate", date);
-            $("#termination_date").datepicker( "option", "minDate", selectedDate );
-        }
-    });
-    $("#termination_date").datepicker({
-      
-        showOtherMonths: true,
-        selectOtherMonths: true,
-        format: "dd/mm/yyyy",
-        autoclose: true,
-        onSelect: function(selectedDate) {
-            $("#effective_date").datepicker( "option", "maxDate", selectedDate );
-        }
-    });
-
-    $("#dob").datepicker({
-      changeMonth: true,
-      changeYear: true,
-      format: "dd/mm/yyyy",
-      autoclose: true,
-      yearRange: '1950:2000',
-  });
-
-
-    
-  $('body').on('change', '#insStatus', function(){
-    var id = $(this).attr('data-id');
-    if(this.checked){
-      var status = 1;
-    }else{
-      var status = 0;
-    }
-    
-    $.ajax({
-      method: "get",
-      url: "passenger/status/"+id+"/"+status,
-      success: function (response) {
-        console.log(response);
-      }
-    });
-  });
-
-});
 
 </script>
 

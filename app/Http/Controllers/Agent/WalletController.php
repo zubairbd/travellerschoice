@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
-use App\Models\Passenger;
+use App\Models\Insurance;
 use App\Models\Payment;
+use App\Models\Product;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,34 +13,42 @@ use Illuminate\Support\Facades\Auth;
 class WalletController extends Controller
 {
     // Agent Insurance Payments
-    public function insurancePayment($pp_number){
-        $insurance = Passenger::where('pp_number', $pp_number)->first();
-        return view('frontend.agents.insurance-payment',compact('insurance'));
+    public function insurancePayment($policy_number){
+        $insurance = Insurance::where('policy_number', $policy_number)->first();
+        $price = Product::where('slug', $insurance->insurance_type)->first();
+        $prices = $price->price - insurancePrice() ;
+        return view('frontend.agents.insurance-payment',compact('insurance', 'prices'));
     }
 
     // Agent Insurance Payments Submit
     public function insurancePaymentSubmit(Request $request){
         $request->validate([
-            'passenger_id' => 'required',
+            'insurance_id' => 'required|unique:payments',
             
           ]);
           $currentuserID = Auth::user()->id;
 
           $wallet = walletBalance();
 
-          if($wallet >= 299){
+          if($wallet > $request->amount - 1 ){
 
             $payment = new Payment();
     
-            $payment->passenger_id = $request->passenger_id;
+            $payment->insurance_id = $request->insurance_id;
             $payment->account_number = $currentuserID;
             $payment->user_id = $currentuserID;
-            $payment->amount = 300;
+            $payment->amount = $request->amount;
             $payment->payment_type = "Wallet";
 
             $payment->save();
 
+            if($payment){
+                $insStatus = Insurance::where('id', $request->insurance_id)->first();
+                $insStatus->status = 1;
+                $insStatus->save();
+            }
             
+
             return redirect()->route('agent.insurance.list')->with('success', 'Payment successfully done!');
         }else{
             return back()->with('error', 'Wallet Amount Due');
@@ -52,7 +61,7 @@ class WalletController extends Controller
     {
         $currentuserid = Auth::user()->id;
         
-        $wallets = Wallet::where('agent_id', $currentuserid)->orderBy('id', 'DESC')->get();
+        $wallets = Wallet::where('agent_id', $currentuserid)->orderBy('id', 'DESC')->limit(5)->get();
         return view('frontend.agents.wallet.index', compact('wallets'));
     }
 
