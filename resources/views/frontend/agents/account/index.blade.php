@@ -30,11 +30,9 @@
         </header>
         <!-- Content Row -->
         <div class="row">
-            <div class="px-4">
-                @include('partials.messages')
-            </div>
 
             <div class="col-xl-12 col-lg-10">
+
                 <!-- Area Chart -->
                 <div class="card shadow mb-4">
                     {{-- <div class="card-header py-3">
@@ -52,7 +50,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="account_number">Account Number</label>
-                                        <input type="text" name="account_number" class="form-control" id="account_number" value="{{$account->account_number}}" readonly>
+                                        <input type="text" name="account_number" class="form-control" id="account_number" placeholder="Account Number">
                                     </div>
                                     <div class="form-group">
                                         <label for="trxid">TxrID</label>

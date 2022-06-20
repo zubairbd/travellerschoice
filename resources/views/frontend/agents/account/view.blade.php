@@ -17,7 +17,7 @@
                         <div class="col-auto mb-3">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i class="fa fa-wallet"></i><circle cx="12" cy="7" r="4"></circle></svg></div>
-                                Wallet - Deposit
+                                Wallet - Account Details
                             </h1>
                         </div>
                         <div class="col-auto mb-3">
@@ -33,38 +33,23 @@
             <div class="px-4">
                 @include('partials.messages')
             </div>
-
             <div class="col-xl-12 col-lg-10">
+                
                 <!-- Area Chart -->
                 <div class="card shadow mb-4">
                     {{-- <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
                     </div> --}}
                     <div class="card-body">
-                        <form method="post" action="{{route('agent.wallet.deposit.store')}}">
-                            @csrf
-                            <div class="row justify-content-center">
-                                <div class="col-md-8">
-                                                    
-                                    <div class="form-group">
-                                        <label for="amount">Deposit Amount</label>
-                                        <input type="text" name="amount" class="form-control" id="amount" placeholder="Deposit Amount">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="account_number">Account Number</label>
-                                        <input type="text" name="account_number" class="form-control" id="account_number" value="{{$account->account_number}}" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="trxid">TxrID</label>
-                                        <input type="text" name="trxid" class="form-control" id="trxid" placeholder="TxrID">
-                                    </div>
-
-
-
-                                    <button type="submit" class="btn btn-primary float-right">Deposit Now</button>
-                                </div>
-                            </div>
-                        </form>
+                        <ul class="list-group">
+                            <li class="list-group-item"><b>Account Name:</b> {{$account->account_name}}</li>
+                            <li class="list-group-item"><b>Account Number:</b> {{$account->account_number}}</li>
+                            <li class="list-group-item"><b>Account Status:</b> {{$account->status == 1 ? 'Active' : 'Inactive' }}</li>
+                            <li class="list-group-item"><b>Organization:</b> {{$account->user->organization}}</li>
+                            <li class="list-group-item"><b>Mobile:</b> {{$account->user->mobile}}</li>
+                            <li class="list-group-item"><b>City:</b> {{$account->user->city}}</li>
+                            
+                          </ul>
                     </div>
                 </div>
 

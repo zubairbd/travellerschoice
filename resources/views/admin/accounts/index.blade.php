@@ -1,13 +1,13 @@
 @extends('layouts.admin', [
-  'page_header' => 'Completed Orders',
+  'page_header' => 'Account List',
   'dash' => '',
   'users' => '',
   'product' => '',
-  'disc' => 'active',
+  'disc' => '',
   'comorder' => '',
   'pandorder' => '',
   'pay' => '',
-  'acc' => '',
+  'acc' => 'active',
   'wallet' => ''
 ])
 
@@ -18,12 +18,11 @@
   .toggle.ios .toggle-handle { border-radius: 20rem; }
 </style>
 @endsection
-@section('discounts')active @endsection
 @section('content')
 @include('message')
   @if ($auth->role == 'A')
     <div class="margin-bottom">
-      <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#createModal">Add Discount</button>
+      <button type="button" class="btn btn-wave" data-toggle="modal" data-target="#createModal">Add Account</button>
 
     </div>
    
@@ -33,33 +32,24 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Add Discount</h4>
+            <h4 class="modal-title">Add Account</h4>
           </div>
-          {!! Form::open(['method' => 'POST', 'action' => '\App\Http\Controllers\Admin\DiscountController@store']) !!}
+          {!! Form::open(['method' => 'POST', 'action' => '\App\Http\Controllers\Admin\AccountController@store']) !!}
             <div class="modal-body">
               <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group{{ $errors->has('campaign_name') ? ' has-error' : '' }}">
-                    {!! Form::label('campaign_name', 'Campaign Name') !!}
+                <div class="col-md-8">
+                  <div class="form-group{{ $errors->has('account_name') ? ' has-error' : '' }}">
+                    {!! Form::label('account_name', 'Account Name') !!}
                     <span class="required">*</span>
-                    {!! Form::text('campaign_name', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'Enter product name']) !!}
-                    <small class="text-danger">{{ $errors->first('campaign_name') }}</small>
+                    {!! Form::text('account_name', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'Enter product name']) !!}
+                    <small class="text-danger">{{ $errors->first('account_name') }}</small>
                   </div>
                   
-                  <div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
-                    {!! Form::label('role', 'Role') !!}
+                  <div class="form-group{{ $errors->has('user_id') ? ' has-error' : '' }}">
+                    {!! Form::label('user_id', 'User') !!}
 
-                    {!! Form::select('role', ['U' => 'Users', 'AG' => 'Agents'], null, ['class' => 'form-control select2', 'required' => 'required']) !!}
-                    <small class="text-danger">{{ $errors->first('role') }}</small>
-                  </div>
-
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group{{ $errors->has('amount') ? ' has-error' : '' }}">
-                    {!! Form::label('amount', 'Amount') !!}
-                    <span class="required">*</span>
-                    {!! Form::text('amount', null, ['class' => 'form-control', 'placeholder' => 'eg: 1234', 'required' => 'required']) !!}
-                    <small class="text-danger">{{ $errors->first('amount') }}</small>
+                    {!! Form::select('user_id', $users, null, ['class' => 'form-control select2', 'required' => 'required']) !!}
+                    <small class="text-danger">{{ $errors->first('user_id') }}</small>
                   </div>
 
                   <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
@@ -90,33 +80,33 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Campaign Name</th>
-                  <th>Amount</th>
-                  <th>Role</th>
+                  <th>Account Name</th>
+                  <th>Account Number</th>
+                  <th>Username</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                @if ($discounts)
+                @if ($accounts)
                   @php($n = 1)
-                  @foreach ($discounts as $key => $discount)
+                  @foreach ($accounts as $key => $account)
                     <tr>
                       <td>
                         {{$n}}
                         @php($n++)
                       </td>
-                      <td>{{$discount->campaign_name}}</td>
-                      <td>{{$discount->amount}}</td>
-                      <td>{{$discount->role == 'U' ? 'User' : 'Agent'}}</td>
-                      <td><button class="btn btn-warning btn-xs">{{$discount->status == 0 ? 'Inactive' : 'Active'}}</button></td>
+                      <td>{{$account->account_name}}</td>
+                      <td>{{$account->account_number}}</td>
+                      <td>{{$account->user->username}}</td>
+                      <td><button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#{{$account->id}}accountActiveModal">{{$account->status == 0 ? 'Inactive' : 'Active'}}</button></td>
                       
                       <td>
                         <!-- Edit Button -->
-                        <a type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#{{$discount->id}}EditModal"><i class="fa fa-edit"></i> Edit</a>
+                        <a type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#{{$account->id}}EditModal"><i class="fa fa-edit"></i> Edit</a>
                         <!-- Delete Button -->
-                        <a type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#{{$discount->id}}deleteModal"><i class="fa fa-close"></i> Delete</a>
-                        <div id="{{$discount->id}}deleteModal" class="delete-modal modal fade" role="dialog">
+                        <a type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#{{$account->id}}deleteModal"><i class="fa fa-close"></i> Delete</a>
+                        <div id="{{$account->id}}deleteModal" class="delete-modal modal fade" role="dialog">
                           <!-- Delete Modal -->
                           <div class="modal-dialog modal-sm">
                             <div class="modal-content">
@@ -129,7 +119,7 @@
                                 <p>Do you really want to delete these records? This process cannot be undone.</p>
                               </div>
                               <div class="modal-footer">
-                                {!! Form::open(['method' => 'DELETE', 'action' => ['\App\Http\Controllers\Admin\DiscountController@destroy', $discount->id]]) !!}
+                                {!! Form::open(['method' => 'DELETE', 'action' => ['\App\Http\Controllers\Admin\AccountController@destroy', $account->id]]) !!}
                                     {!! Form::reset("No", ['class' => 'btn btn-gray', 'data-dismiss' => 'modal']) !!}
                                     {!! Form::submit("Yes", ['class' => 'btn btn-danger']) !!}
                                 {!! Form::close() !!}
@@ -139,39 +129,75 @@
                         </div>
                       </td>
                     </tr>
-                    <!-- edit model -->
-                    <div id="{{$discount->id}}EditModal" class="modal fade" role="dialog">
-                      <div class="modal-dialog modal-lg">
+                    <!-- account Active model -->
+                    <div id="{{$account->id}}accountActiveModal" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Edit Discount </h4>
+                            <h4 class="modal-title">Edit Account </h4>
                           </div>
-                          {!! Form::model($discount, ['method' => 'PATCH', 'action' => ['\App\Http\Controllers\Admin\DiscountController@update', $discount->id]]) !!}
+                          {!! Form::model($account, ['method' => 'PATCH', 'action' => ['\App\Http\Controllers\Admin\AccountController@accountActive', $account->id]]) !!}
                             <div class="modal-body">
                               <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group{{ $errors->has('campaign_name') ? ' has-error' : '' }}">
-                                    {!! Form::label('campaign_name', 'Campaign Name') !!}
+                                <div class="col-md-8">
+                                  <div class="form-group{{ $errors->has('account_name') ? ' has-error' : '' }}">
+                                    {!! Form::label('account_name', 'Account Name') !!}
                                     <span class="required">*</span>
-                                    {!! Form::text('campaign_name', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'Enter product name']) !!}
-                                    <small class="text-danger">{{ $errors->first('campaign_name') }}</small>
+                                    {!! Form::text('account_name', null, ['class' => 'form-control', 'readonly']) !!}
+                                    <small class="text-danger">{{ $errors->first('account_name') }}</small>
                                   </div>
                                   
-                                  <div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
-                                    {!! Form::label('role', 'Role') !!}
+                                  <div class="form-group{{ $errors->has('user_id') ? ' has-error' : '' }}">
+                                    {!! Form::label('user_id', 'User') !!}
                 
-                                    {!! Form::select('role', ['U' => 'Users', 'AG' => 'Agents'], null, ['class' => 'form-control select2', 'required' => 'required']) !!}
-                                    <small class="text-danger">{{ $errors->first('role') }}</small>
+                                    {!! Form::select('user_id', $users, null, ['class' => 'form-control select2', 'disabled']) !!}
+                                    <small class="text-danger">{{ $errors->first('user_id') }}</small>
                                   </div>
                 
+                                  <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+                                    {!! Form::label('status', 'Status') !!}
+                
+                                    {!! Form::select('status', [1 => 'Active'], null, ['class' => 'form-control select2', 'required' => 'required']) !!}
+                                    <small class="text-danger">{{ $errors->first('status') }}</small>
+                                  </div>
+                                  
                                 </div>
-                                <div class="col-md-6">
-                                  <div class="form-group{{ $errors->has('amount') ? ' has-error' : '' }}">
-                                    {!! Form::label('amount', 'Amount') !!}
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <div class="btn-group pull-right">
+                                {!! Form::submit("Update", ['class' => 'btn btn-wave']) !!}
+                              </div>
+                            </div>
+                          {!! Form::close() !!}
+                        </div>
+                      </div>
+                    </div>
+                    <!-- edit model -->
+                    <div id="{{$account->id}}EditModal" class="modal fade" role="dialog">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Edit Account </h4>
+                          </div>
+                          {!! Form::model($account, ['method' => 'PATCH', 'action' => ['\App\Http\Controllers\Admin\AccountController@update', $account->id]]) !!}
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col-md-8">
+                                  <div class="form-group{{ $errors->has('account_name') ? ' has-error' : '' }}">
+                                    {!! Form::label('account_name', 'Account Name') !!}
                                     <span class="required">*</span>
-                                    {!! Form::text('amount', null, ['class' => 'form-control', 'placeholder' => 'eg: 1234', 'required' => 'required']) !!}
-                                    <small class="text-danger">{{ $errors->first('amount') }}</small>
+                                    {!! Form::text('account_name', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'Enter product name']) !!}
+                                    <small class="text-danger">{{ $errors->first('account_name') }}</small>
+                                  </div>
+                                  
+                                  <div class="form-group{{ $errors->has('user_id') ? ' has-error' : '' }}">
+                                    {!! Form::label('user_id', 'User') !!}
+                
+                                    {!! Form::select('user_id', $users, null, ['class' => 'form-control select2', 'required' => 'required']) !!}
+                                    <small class="text-danger">{{ $errors->first('user_id') }}</small>
                                   </div>
                 
                                   <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">

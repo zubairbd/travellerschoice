@@ -28,11 +28,7 @@
             </div>
         </header>
         <div class="px-4">
-            @if ($errors->any())
-                @foreach ($errors->all() as $error)
-                <div class="alert alert-danger" role="alert">{{$error}}</div>
-                @endforeach
-            @endif
+            @include('partials.messages')
         </div>
        
         <!-- Content Row -->
@@ -54,9 +50,10 @@
                                         <label for="insurance_type">Insurance Type</label>
                                             <select class="from-control custom-select" name="insurance_type" id="insurance_type">
                                             <option selected>Select Insurance Type</option>
-                                            <option value="Worldtrips">Worldtrips</option>
-                                            <option value="WeCare">We Care</option>
-                                            <option value="Dubai">Dubai Insurance</option>
+                                            @foreach ($products as $product)
+                                                <option value="{{$product->slug}}">{{$product->name}}</option>
+                                            @endforeach
+                                            
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -118,7 +115,7 @@ $(document).ready(function() {
           changeMonth: true,
           showOtherMonths: true,
           selectOtherMonths: true,
-          dateFormat: "dd/mm/yy",
+        //   dateFormat: "dd/mm/yy",
           autoclose: true,
           onSelect: function(selectedDate) {
               //$("#cal4").datepicker("setDate", selectedDate);
@@ -132,7 +129,7 @@ $(document).ready(function() {
         
           showOtherMonths: true,
           selectOtherMonths: true,
-          dateFormat: "dd/mm/yy",
+        //   dateFormat: "dd/mm/yy",
           autoclose: true,
           onSelect: function(selectedDate) {
               $("#effective_date").datepicker( "option", "maxDate", selectedDate );
@@ -142,7 +139,7 @@ $(document).ready(function() {
       $("#dob").datepicker({
         changeMonth: true,
         changeYear: true,
-        dateFormat: "dd/mm/yy",
+        // dateFormat: "dd/mm/yy",
         autoclose: true,
         yearRange: '1950:2022',
     });

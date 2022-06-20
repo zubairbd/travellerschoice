@@ -7,6 +7,7 @@
   'comorder' => 'active',
   'pandorder' => '',
   'pay' => '',
+  'acc' => '',
   'wallet' => ''
 ])
 
@@ -114,7 +115,7 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Edit Insurance </h4>
                       </div>
-                      {!! Form::model($insurance, ['method' => 'PATCH', 'action' => ['\App\Http\Controllers\Admin\PandingOrderController@update', $insurance->id]]) !!}
+                      {!! Form::model($insurance, ['method' => 'PATCH', 'action' => ['\App\Http\Controllers\Admin\CompletedOrderController@update', $insurance->id]]) !!}
                         <div class="modal-body">
                           <div class="row">
                             <div class="col-md-6">

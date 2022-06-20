@@ -7,6 +7,7 @@
   'comorder' => '',
   'pandorder' => '',
   'pay' => '',
+  'acc' => '',
   'wallet' => 'active'
 ])
 
@@ -96,75 +97,44 @@
                   </td>
                 </tr>
                 <!-- edit model -->
-                {{-- <div id="{{$wallet->id}}EditModal" class="modal fade" role="dialog">
-                  <div class="modal-dialog modal-lg">
+                <div id="{{$wallet->id}}EditModal" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Edit Student </h4>
+                        <h4 class="modal-title">Edit Amount </h4>
                       </div>
-                      {!! Form::model($wallet, ['method' => 'PATCH', 'action' => ['\App\Http\Controllers\Admin\WalletController@update', $wallet->id]]) !!}
+                      {!! Form::model($wallet, ['method' => 'PATCH', 'action' => ['\App\Http\Controllers\Admin\WalletController@walletsEdit', $wallet->id]]) !!}
                         <div class="modal-body">
                           <div class="row">
-                            <div class="col-md-6">
-                              <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                {!! Form::label('name', 'Name') !!}
+                            <div class="col-md-8 offset-md-3">
+                              <div class="form-group{{ $errors->has('amount') ? ' has-error' : '' }}">
+                                {!! Form::label('amount', 'Amount') !!}
                                 <span class="required">*</span>
-                                {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'Enter your name']) !!}
-                                <small class="text-danger">{{ $errors->first('name') }}</small>
+                                {!! Form::text('amount', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'Enter your name']) !!}
+                                <small class="text-danger">{{ $errors->first('amount') }}</small>
                               </div>
-                              <div class="form-group{{ $errors->has('pp_number') ? ' has-error' : '' }}">
-                                {!! Form::label('pp_number', 'Passport No') !!}
+                              <div class="form-group{{ $errors->has('trxid') ? ' has-error' : '' }}">
+                                {!! Form::label('trxid', 'TxrID') !!}
                                 <span class="required">*</span>
-                                {!! Form::text('pp_number', null, ['class' => 'form-control', 'placeholder' => 'eg: AB1234567', 'required' => 'required']) !!}
-                                <small class="text-danger">{{ $errors->first('pp_number') }}</small>
+                                {!! Form::text('trxid', null, ['class' => 'form-control', 'placeholder' => 'eg: AB1234567', 'required' => 'required']) !!}
+                                <small class="text-danger">{{ $errors->first('trxid') }}</small>
                               </div>
-                              <div class="form-group{{ $errors->has('dob') ? ' has-error' : '' }}">
-                                {!! Form::label('dob', 'Date of birth') !!}
-                                <span class="required">*</span>
-                                {!! Form::text('dob', null, ['class' => 'form-control datepicker', 'id' => 'dob', 'placeholder' => '01/01/1997', 'required' => 'required']) !!}
-                                <small class="text-danger">{{ $errors->first('dob') }}</small>
+
+                              <div class="form-group{{ $errors->has('agent_id') ? ' has-error' : '' }}">
+                                {!! Form::label('agent_id', 'Agent') !!}
+                                {!! Form::select('agent_id', $users, null, ['class' => 'form-control select2', 'required' => 'required']) !!}
+                                <small class="text-danger">{{ $errors->first('agent_id') }}</small>
                               </div>
-                              <div class="form-group{{ $errors->has('policy_number') ? ' has-error' : '' }}">
-                                {!! Form::label('policy_number', 'Policy Number') !!}
-                                <span class="required">*</span>
-                                {!! Form::text('policy_number', null, ['class' => 'form-control', 'placeholder' => 'eg: AB1234567', 'required' => 'required']) !!}
-                                <small class="text-danger">{{ $errors->first('policy_number') }}</small>
+
+                              <div class="form-group{{ $errors->has('account_number') ? ' has-error' : '' }}">
+                                {!! Form::label('account_number', 'Account Number') !!}
+                                {!! Form::select('account_number', $accounts, null, ['class' => 'form-control select2', 'required' => 'required']) !!}
+                                <small class="text-danger">{{ $errors->first('account_number') }}</small>
                               </div>
                               
                             </div>
-                            <div class="col-md-6">
-                              <div class="form-group{{ $errors->has('destination') ? ' has-error' : '' }}">
-                                {!! Form::label('destination', 'Destination') !!}
-
-                                {!! Form::select('destination', ['Saudi Arabia' => 'Saudi Arabia', 'Oman'=>'Oman', 'United Arab Emirates'=>'United Arab Emirates', 'Qatar'=>'Qatar', 'Kuwait'=>'Kuwait'], null, ['class' => 'form-control select2', 'required' => 'required']) !!}
-                                <small class="text-danger">{{ $errors->first('destination') }}</small>
-                              </div>
-
-                              <div class="form-group{{ $errors->has('effective_date') ? ' has-error' : '' }}">
-                                {!! Form::label('effective_date', 'Effective Date') !!}
-
-                                {!! Form::text('effective_date', null, ['class' => 'datepicker form-control', 'id' => 'effective_date', 'placeholder' => 'DD/MM/YY']) !!}
-                                <small class="text-danger">{{ $errors->first('effective_date') }}</small>
-                              </div>
-
-                              <div class="form-group{{ $errors->has('termination_date') ? ' has-error' : '' }}">
-                                {!! Form::label('termination_date', 'Termination Date') !!}
-
-                                {!! Form::text('termination_date', null, ['class' => 'form-control datepicker', 'id' => 'termination_date', 'placeholder' => 'eg: 01/02/2021']) !!}
-                                <small class="text-danger">{{ $errors->first('termination_date') }}</small>
-                              </div>
-                              
-                              <div class="form-group{{ $errors->has('updated_at') ? ' has-error' : '' }}">
-                                {!! Form::label('updated_at', 'Issue Date') !!}
-
-                                {!! Form::text('updated_at', null, ['class' => 'form-control datepicker', 'id' => 'updated_at', 'placeholder' => 'eg: 01/02/2021']) !!}
-                                <small class="text-danger">{{ $errors->first('updated_at') }}</small>
-                              </div>
-
-                              
-
-                            </div>
+                            
                           </div>
                         </div>
                         <div class="modal-footer">
@@ -175,7 +145,7 @@
                       {!! Form::close() !!}
                     </div>
                   </div>
-                </div> --}}
+                </div>
               @endforeach
             @endif
           </tbody>

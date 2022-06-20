@@ -17,7 +17,7 @@
                         <div class="col-auto mb-3">
                             <h1 class="page-header-title">
                                 <div class="page-header-icon"><i class="fa fa-wallet"></i><circle cx="12" cy="7" r="4"></circle></svg></div>
-                                Wallet - Deposit
+                                Wallet - Account Opening
                             </h1>
                         </div>
                         <div class="col-auto mb-3">
@@ -33,35 +33,32 @@
             <div class="px-4">
                 @include('partials.messages')
             </div>
-
             <div class="col-xl-12 col-lg-10">
+                
                 <!-- Area Chart -->
                 <div class="card shadow mb-4">
                     {{-- <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
                     </div> --}}
                     <div class="card-body">
-                        <form method="post" action="{{route('agent.wallet.deposit.store')}}">
+                        <form method="post" action="{{route('agent.account.store')}}">
                             @csrf
                             <div class="row justify-content-center">
                                 <div class="col-md-8">
                                                     
                                     <div class="form-group">
-                                        <label for="amount">Deposit Amount</label>
-                                        <input type="text" name="amount" class="form-control" id="amount" placeholder="Deposit Amount">
+                                        <label for="accountName">Account Name</label>
+                                        <input type="text" name="account_name" class="form-control" id="accountName" placeholder="Account Name">
                                     </div>
                                     <div class="form-group">
-                                        <label for="account_number">Account Number</label>
-                                        <input type="text" name="account_number" class="form-control" id="account_number" value="{{$account->account_number}}" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="trxid">TxrID</label>
-                                        <input type="text" name="trxid" class="form-control" id="trxid" placeholder="TxrID">
+                                        <label for="remark">Any Message</label>
+                                        <textarea name="remark" class="form-control" id="remark" cols="5" rows="5" placeholder="Any Message"></textarea>
+                                        
                                     </div>
 
 
 
-                                    <button type="submit" class="btn btn-primary float-right">Deposit Now</button>
+                                    <button type="submit" class="btn btn-success float-right">Account Request</button>
                                 </div>
                             </div>
                         </form>

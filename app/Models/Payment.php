@@ -15,4 +15,8 @@ class Payment extends Model
     public function insurance() {
         return $this->belongsTo(Insurance::class, 'insurance_id', 'id');
     }
+
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

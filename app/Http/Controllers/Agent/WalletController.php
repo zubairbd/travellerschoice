@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
+use App\Models\Account;
 use App\Models\Insurance;
 use App\Models\Payment;
 use App\Models\Product;
@@ -69,7 +70,10 @@ class WalletController extends Controller
     // Agent wallet Deposit
     public function walletDeposit()
     {
-        return view('frontend.agents.wallet.deposit');
+        $user = Auth::user()->id;
+        $account = Account::where('user_id', $user)->where('status', 1)->first();
+
+        return view('frontend.agents.wallet.deposit', compact('account'));
     }
 
 
@@ -81,17 +85,32 @@ class WalletController extends Controller
             'amount' => 'required',
           ]);
 
+        $user = Auth::user()->id;
+        $account = Account::where('user_id', $user)->where('status', 1)->first();
+
         $currentuserID = Auth::user()->id;
 
         $doposit = new Wallet();
 
         $doposit->agent_id = $currentuserID;
         $doposit->amount = $request->amount;
-        $doposit->account_number = $request->account_number;
+        $doposit->account_number = $account->account_number;
         $doposit->trxid = $request->trxid;
-        $doposit->save();
         
-        return redirect()->route('agent.wallet.index')->with('success', 'Wallet Deposit successfully done!');
+        $save = $doposit->save();
+
+        
+
+
+        if($account){
+            $save;
+            return redirect()->route('agent.wallet.index')->with('success', 'Wallet Deposit successfully done!');
+        }else{
+            return back()->with('error','Your Account Not Active.');
+        }
+            
+        
+        
     }
 
 

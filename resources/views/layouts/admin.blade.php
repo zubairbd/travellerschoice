@@ -121,7 +121,9 @@
           <li class="{{$comorder}}"><a href="{{route('admin.order_completed.index')}}" title="Orders Completed"><i class="fa fa-cart-plus"></i> <span>Orders Completed</span></a></li>
           <li class="{{$pandorder}}"><a href="{{route('admin.order_panding.index')}}" title="Panding Orders"><i class="fa fa-shopping-cart"></i> <span>Panding Orders</span></a></li>
           <li class="{{$pay}}"><a href="{{url('/admin/payments')}}" title="Payments"><i class="fa fa-money-bill"></i> <span>Payments</span></a></li>
+          <li class="{{$acc}}"><a href="{{url('/admin/accounts')}}" title="Accounts"><i class="fa fa-university"></i> <span>Accounts</span></a></li>
           <li class="{{$wallet}}"><a href="{{url('/admin/wallets')}}" title="Wallets"><i class="fa fa-wallet"></i> <span>Wallets</span></a></li>
+          <li class="@yield('reports')"><a href="{{url('/admin/reports')}}" title="Wallets"><i class="fa fa-poll"></i> <span>Reports</span></a></li>
 
         @elseif ($auth->role == 'S')
           

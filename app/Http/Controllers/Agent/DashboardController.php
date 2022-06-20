@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
 use App\Models\Insurance;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +35,8 @@ class DashboardController extends Controller
     // Agent Insurance Create
     public function insuranceCreate()
     {
-        return view('frontend.agents.insurance-create');
+        $products = Product::orderBy('id', 'DESC')->get();
+        return view('frontend.agents.insurance-create', compact('products'));
     }
 
 
@@ -60,6 +62,7 @@ class DashboardController extends Controller
         // $newDateFormat3 = \Carbon\Carbon::parse($request->effective_date)->format('dd/mm/yyyy');
         
         // $input['effective_date'] = $newDateFormat3;
+       
         if($request->insurance_type == 'Worldtrips'){
             $input['policy_number'] =  $insuranceId.$randomId;
         }elseif($request->insurance_type == 'WeCare'){
@@ -68,8 +71,10 @@ class DashboardController extends Controller
 
         $input['creator'] = Auth::user()->id;
         $insurance = Insurance::create($input);
-        $payID = $insurance->pp_number;
+        $payID = $insurance->policy_number;
         return redirect()->route('agent.insurance.payment', $payID)->with('success', 'Travel Insurance applyed successfully! Please payment for download insurance certificate');
+    
+        
     }
 
 

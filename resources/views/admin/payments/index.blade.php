@@ -7,6 +7,7 @@
   'comorder' => '',
   'pandorder' => '',
   'pay' => 'active',
+  'acc' => '',
   'wallet' => ''
 ])
 
@@ -110,7 +111,7 @@
                   <td>{{$payment->insurance->policy_number}}</td>
                   <td>{{$payment->insurance->name}}</td>
                   <td>{{$payment->insurance->pp_number}}</td>
-                  <td>{{$payment->account_number}}</td>
+                  <td>{{$payment->user->name}}</td>
                   <td>{{$payment->payment_type}}</td>
                   <td>{{$payment->created_at->format('F d, Y - h:m a')}}</td>
      

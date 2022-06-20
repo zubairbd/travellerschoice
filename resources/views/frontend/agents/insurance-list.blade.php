@@ -57,11 +57,7 @@
         </header>
         
         <div class="px-4">
-            @if(session()->has('success'))
-                <div class="alert alert-success" role="alert">
-                    {{ session()->get('success') }}
-                </div>
-            @endif
+            @include('partials.messages')
         </div>
         
         <!-- DataTales Example -->

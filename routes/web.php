@@ -62,16 +62,21 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
     Route::resource('/products', 'App\Http\Controllers\Admin\ProductController');
     Route::resource('/discounts', 'App\Http\Controllers\Admin\DiscountController');
 
+
+    Route::resource('/wallets', 'App\Http\Controllers\Admin\WalletController');
     Route::get('/wallets',  [\App\Http\Controllers\Admin\WalletController::class, 'walletsIndex'])->name('wallets.index');
     Route::get('/wallets/status/{id}/{s}',  [\App\Http\Controllers\Admin\WalletController::class, 'walletsStatus']);
-    Route::get('/wallets/edit/{id}',  [\App\Http\Controllers\Admin\WalletController::class, 'walletsEdit'])->name('wallets.edit');
+    Route::PATCH('/wallets/edit/{id}',  [\App\Http\Controllers\Admin\WalletController::class, 'walletsEdit'])->name('wallets.edit');
     
+    Route::resource('/accounts', 'App\Http\Controllers\Admin\AccountController');
+    Route::PATCH('/accounts/active/{id}', [App\Http\Controllers\Admin\AccountController::class, 'accountActive'])->name('accounts.active');
     // Route::resource('/profile', 'App\Http\Controllers\Admin\ProfileController');
     
     Route::get('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('profile');
     Route::post('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('profile.update');
     Route::post('/changepassword', [App\Http\Controllers\Admin\ProfileController::class, 'changePassword'])->name('profile.changepassword');
     
+    Route::get('/reports', [App\Http\Controllers\Admin\ReportController::class, 'reportIndex'])->name('report.filter');
 });
 
 // User Route
@@ -123,6 +128,8 @@ Route::group(['prefix' => 'agent', 'as' => 'agent.', 'middleware' => ['auth', 'a
     Route::post('/profile/changepassword', [App\Http\Controllers\Agent\ProfileController::class, 'changePassword'])->name('profile.changepassword');
     Route::post('/profile/photo', [\App\Http\Controllers\Agent\ProfileController::class, 'imageUpload'])->name('profile.photo');
    
+    
+    Route::resource('/account', 'App\Http\Controllers\Agent\AccountController');
 });
 
 

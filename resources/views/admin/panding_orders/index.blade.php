@@ -7,6 +7,7 @@
   'comorder' => '',
   'pandorder' => 'active',
   'pay' => '',
+  'acc' => '',
   'wallet' => ''
 ])
 

@@ -27,19 +27,12 @@
             </div>
         </header>
     
-        @if ($errors->any())
-            @foreach ($errors->all() as $error)
-            <div class="alert alert-danger" role="alert">{{$error}}</div>
-            @endforeach
-        @endif
-        @if(session()->has('error'))
-            <div class="alert alert-danger" role="alert">
-                {{ session()->get('error') }}
-            </div>
-        @endif
         <!-- Content Row -->
         <div class="row">
-
+            <div class="px-4">
+                @include('partials.messages')
+            </div>
+            
             <div class="col-xl-12 col-lg-10">
 
                 <!-- Area Chart -->

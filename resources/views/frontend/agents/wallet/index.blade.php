@@ -45,9 +45,22 @@
                                 Wallet - Transaction history
                             </h1>
                         </div>
+                        @php
+                            $auth = Auth::user()->id;
+                            $account = \App\Models\Account::where('user_id', $auth)->first();
+                        @endphp
+                
                         <div class="col-auto mb-3">
-                            <a href="{{route('agent.wallet.deposit')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-plus fa-sm text-white-50"></i> Wallet Deposit</a>
+                            @if (!$account)
+                                <a href="{{route('agent.account.create')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-university fa-sm text-white-50"></i> Account Opening</a>
+                            @else
+                                <a href="{{route('agent.account.show',$account)}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                    class="fas fa-university fa-sm text-white-50"></i> Account Details</a>
+                                
+                                <a href="{{route('agent.wallet.deposit')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                    class="fas fa-plus fa-sm text-white-50"></i> Wallet Deposit</a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -58,6 +71,11 @@
         @endphp
         <h3 class="alert alert-info">Balance: {{ walletBalance() }}</h3>
         <!-- DataTales Example -->
+
+        <div class="px-4">
+            @include('partials.messages')
+        </div>
+        
         <div class="card shadow mb-4">
             {{-- <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Insurance List</h6>
