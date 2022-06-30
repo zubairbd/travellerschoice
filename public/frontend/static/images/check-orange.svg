@@ -1,0 +1,8 @@
+<svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 10" width="12" height="10">
+	<title>check-orange</title>
+	<style>
+		tspan { white-space:pre }
+		.s0 { fill: none;stroke: #ffffff;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:.8;stroke-width: 2 } 
+	</style>
+	<path id="Layer" class="s0" d="m10.67 1.91l-6.42 6.33l-2.92-2.88"/>
+</svg>

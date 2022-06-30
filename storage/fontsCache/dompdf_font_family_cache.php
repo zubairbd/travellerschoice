@@ -86,7 +86,7 @@ return array (
     'bold' => $fontDir . '/jaldib_bold_a69df0899680b01702fceb49124f2d7c',
   ),
   'caveat' => array(
-    'normal' => $fontDir . '/caveat_normal_dfe5587a6ac8b73b4089fe52e6ced0a5',
+    'normal' => $fontDir . '/caveat_normal_7504dda4024d7b322599671199f82dfd',
   ),
   'charukolaultralight' => array(
     'normal' => $fontDir . '/charukolaultralight_normal_f32f08cecd09f0893ee388b8f9bf3edc',
@@ -96,6 +96,12 @@ return array (
   ),
   'carlito' => array(
     'normal' => $fontDir . '/carlito_normal_c1baed8249fe868776d1ec4bf5149c3d',
+  ),
+  'solaimanlipi' => array(
+    'bold' => $fontDir . '/solaimanlipi_bold_fa9487b48b115bec294db0663e4c0066',
+  ),
+  'kalpurush' => array(
+    'normal' => $fontDir . '/kalpurush_normal_3539c72792f4712e83c3821eebe86a00',
   ),
 );
 }; ?>

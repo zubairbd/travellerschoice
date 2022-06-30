@@ -75,31 +75,6 @@ class DatabaseSeeder extends Seeder
 
         // check if table users is empty
         
-        if(DB::table('products')->count() == 0){
-
-            DB::table('products')->insert([
-
-                [
-                    'name' => 'Worldtrips',
-                    'slug' => 'Worldtrips',
-                    'price' => 300,
-                    'description' => '',
-                    'status' => 1,
-                    
-                ],
-                [
-                    'name' => 'We Care',
-                    'slug' => 'WeCare',
-                    'price' => 300,
-                    'description' => '',
-                    'status' => 1,
-                ],
-
-            ]);
-            
-        } else { echo "\e[31mTable is not empty, therefore NOT "; }
-
-    
-        $this->call(SettingTableSeeder::class);
+        
     }
 }

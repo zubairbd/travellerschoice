@@ -1,119 +1,130 @@
-@extends('layouts.admin', [
-  'page_header' => 'Dashboard',
-  'dash' => 'active',
-  'users' => '',
-  'product' => '',
-  'disc' => '',
-  'comorder' => '',
-  'pandorder' => '',
-  'pay' => '',
-  'acc' => '',
-  'wallet' => ''
-])
-
+@extends('layouts.admin-master')
+@section('dashboard') active @endsection
+@section('styles')
+<!-- Custom styles for this page -->
+<link href="{{asset('frontend')}}/assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<style>
+    
+    span {
+        content: "\09F3";
+        }
+    .card {
+        margin: 0 !important;
+    }
+</style>
+@endsection
 @section('content')
-<!---->
-  <div class="dashboard-block">
-    <div class="row">
-      <div class="col-md-7">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="small-box bg-yellow">
-              <div class="inner">
-                <h3>{{$Insurance}}</h3>
-                <p>Total Insurance</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="{{url('/admin/Insurances')}}" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="small-box bg-red">
-              <div class="inner">
-                <h3>{{totalPayment()}}</h3>
-                <p>Total Payment Received</p>
-              </div>
-              <div class="icon">
-                <i class="fa fa-question-circle-o"></i>
-              </div>
-              <a href="{{url('/admin/topics')}}" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="small-box bg-green">
-              <div class="inner">
-                <h3>{{totalInsCompleted()}}</h3>
-                <p>Total Insurance Completed</p>
-              </div>
-              <div class="icon">
-                <i class="fa fa-question-circle-o"></i>
-              </div>
-              <a href="{{url('/admin/questions')}}" class="small-box-footer">
-                More info <i class="fa fa-arrow-circle-right"></i>
-              </a>
-            </div>
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#AllDeleteModal">Delete All Answer Sheets</button>
-            <p>It's Delete All Student All Quiz Results</p>
-            <!-- All Delete Button -->
-            <div id="AllDeleteModal" class="delete-modal modal fade" role="dialog">
-              <!-- All Delete Modal -->
-              <div class="modal-dialog modal-sm">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <div class="delete-icon"></div>
-                  </div>
-                  <div class="modal-body text-center">
-                    <h4 class="modal-heading">Are You Sure ?</h4>
-                    <p>Do you really want to delete "All these records"? This process cannot be undone.</p>
-                  </div>
-                  <div class="modal-footer">
-                    
-                  </div>
+<div class="container-fluid">
+    <main>
+        <!-- Page Heading -->
+        <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+            <div class="container-xl px-4">
+                <div class="page-header-content">
+                    <div class="row align-items-center justify-content-between pt-3">
+                        <div class="col-auto mb-3">
+                            <h1 class="page-header-title">
+                                <div class="page-header-icon"><i class="fa fa-home"></i><circle cx="12" cy="7" r="4"></circle></svg></div>
+                                Dashboard
+                            </h1>
+                        </div>
+                        <div class="col-auto mb-3">
+                            <a href="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-plus fa-sm text-white-50"></i> Create New Insurance</a>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-5">
-        <div class="box box-danger">
-          <div class="box-header with-border">
-            <h4 class="box-title">Latest Users</h4>
-            <div class="box-tools pull-right">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-              </button>
+        </header>
+        
+        <!-- Content Row -->
+        <div class="row mr-2 ml-2">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Wallet Balance</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800"><span class="fs-5">&#2547;</span> 00</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-wallet fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <!-- /.box-header -->
-          <div class="box-body no-padding">
-            <ul class="users-list clearfix">
-              @if ($user_latest)
-                @foreach ($user_latest as $user)
-                  <li>
-                    <a class="users-list-name" href="#" title="{{$user->name}}">{{$user->name}}</a>
-                    <span class="users-list-date">{{$user->created_at->diffForHumans()}}</span>
-                  </li>
-                @endforeach
-              @endif
-            </ul>
-            <!-- /.users-list -->
-          </div>
-          <!-- /.box-body -->
 
-          <div class="box-footer text-center">
-            <a href="{{url('admin/users')}}" class="uppercase">View All Students</a>
-          </div>
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Total Insurance Applied</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">000</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-          <!-- /.box-footer -->
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                    Total Insurance Payment Paid</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">00</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-money-bill-alt fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    Wallet Pending Balance</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">000</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-comments fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
+    </main>
+
+</div>
+
+@endsection
+@section('scripts')
+    <!-- Page level plugins -->
+    <script src="{{asset('frontend')}}/assets/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="{{asset('frontend')}}/assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{{asset('frontend')}}/assets/js/demo/datatables-demo.js"></script>
+    <script>
+
+        
+    </script>
 @endsection

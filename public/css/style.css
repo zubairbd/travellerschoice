@@ -17,18 +17,66 @@
     src: url('fonts/times-new-roman.ttf') format('truetype');
     font-weight: bold;
   }
+  /* @font-face {
+    font-family: 'kalpurush';
+    src: url('../fonts/kalpurush.ttf') format('truetype');
+    
+  } */
 
 *{
     margin: 0;
     padding: 0;
 }
   
+@page { margin-top: 50px }
+.bg img{
+    margin: 50px;
+    margin-top: 90px !important;
+  } 
+h2{
+    font-family: 'kalpurush' !important;
+    font-size: 18px;
+    color: #000;
+    text-align: center;
+    padding-bottom: -10px;
+    font-weight: '500';
+    margin-top: 20px;
+}
+.containers h1{
+    font-family: 'Arial', sans-serif !important;
+    font-size: 18px;
+    color: #000;
+    text-align: center;
+    padding-bottom: -10px;
+    font-weight: '500';
+}
 .containers{
-    margin: 70px;
+    margin: 50px;
 }
 .containers{
     margin-bottom: 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .logo{
     position: relative;
 }

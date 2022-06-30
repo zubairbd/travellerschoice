@@ -1,192 +1,236 @@
-<!DOCTYPE html>
-<html lang="zxx">  
+<html lang="en">
     <head>
-        <!-- meta tag -->
-        <meta charset="utf-8">
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <title>Travellers Choice - @yield('title', 'Travel Destination Management')</title>
-        <meta name="description" content="">
-        <!-- responsive tag -->
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- favicon -->
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontend')}}/assets/images/favicon.png">
-        <!-- Bootstrap v4.4.1 css -->
-        <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/bootstrap.min.css">
-        <!-- font-awesome css -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
-        <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/font-awesome.min.css">
-        <!-- flaticon css -->
-        <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/fonts/flaticon.css">
-        <!-- animate css -->
-        <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/animate.css">
-        <!-- owl.carousel css -->
-        <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/owl.carousel.css">
-        <!-- slick css -->
-        <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/slick.css">
-        <!-- off canvas css -->
-        <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/off-canvas.css">
-        <!-- magnific popup css -->
-        <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/magnific-popup.css">
-        <!-- Main Menu css -->
-        <link rel="stylesheet" href="{{asset('frontend')}}/assets/css/rsmenu-main.css">
-        <!-- spacing css -->
-        <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/rs-spacing.css">
-        <!-- style css -->
-        <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/style.css"> <!-- This stylesheet dynamically changed from style.less -->
-        <!-- responsive css -->
-        <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/responsive.css">
+        <style type="text/css">
+            .style_captchaContainer__LdFYB {
+                display: flex;
+                align-items: center;
+            }
 
-        <link rel="stylesheet" type="text/css" href="{{asset('frontend')}}/assets/css/custom.css">
-
-        @yield('styles')
-
-    </head>
-    <body class="defult-home">
+            .style_retryButton__2gxEO {
+                border: none;
+                margin: 0 0 0 16px;
+                padding: 0;
+                width: auto;
+                overflow: visible;
+                background: transparent;
+                color: inherit;
+                font: inherit;
+                line-height: normal;
+                -webkit-font-smoothing: inherit;
+                -moz-osx-font-smoothing: inherit;
+                -webkit-appearance: none;
+                outline: none;
+                text-align: inherit;
+            }
+        </style>
+        <meta charset="utf-8" />
+        <link rel="icon" href="{{asset('frontend')}}/static/media/favicon.png" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="theme-color" content="#000000" />
+        <title>সুরক্ষা : কোভিড-১৯ ভ্যাকসিনের জন্য নিবন্ধন করুন</title>
+        <meta name="title" content="কোভিড-১৯ ভ্যাকসিনের জন্য নিবন্ধন করুন" />
+        <meta
+            name="description"
+            content="এই পোর্টালের মাধ্যমে জাতীয় পরিচয়পত্র ও সঠিক মোবাইল নম্বর যাচাইপূর্বক অনলাইনে নিবন্ধন সম্পন্ন করবেন। অনলাইনে নিবন্ধন পরবর্তী তথ্য যাচাইপূর্বক পর্যায়ক্রমে টিকা প্রদানের তারিখ ও কেন্দ্রের নাম উল্লেখপূর্বক মুঠোফোনে খুদেবার্তা পাবেন।মুঠোফোনে খুদেবার্তা প্রাপ্তি সাপেক্ষে টিকাকার্ড জাতীয় পরিচয়পত্র ও সম্মতিপত্রসহ নির্দিষ্ট তারিখে টিকাদান কেন্দ্রে স্ব-শরীরে উপস্থিত হয়ে কোভিড-১৯ টিকা গ্রহণ করবেন।"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://surokkha.gov.bd" />
+        <meta property="og:title" content="সুরক্ষা : কোভিড-১৯ ভ্যাকসিনের জন্য নিবন্ধন করুন" />
+        <meta
+            property="og:description"
+            content="এই পোর্টালের মাধ্যমে জাতীয় পরিচয়পত্র ও সঠিক মোবাইল নম্বর যাচাইপূর্বক অনলাইনে নিবন্ধন সম্পন্ন করবেন। অনলাইনে নিবন্ধন পরবর্তী তথ্য যাচাইপূর্বক পর্যায়ক্রমে টিকা প্রদানের তারিখ ও কেন্দ্রের নাম উল্লেখপূর্বক মুঠোফোনে খুদেবার্তা পাবেন।মুঠোফোনে খুদেবার্তা প্রাপ্তি সাপেক্ষে টিকাকার্ড জাতীয় পরিচয়পত্র ও সম্মতিপত্রসহ নির্দিষ্ট তারিখে টিকাদান কেন্দ্রে স্ব-শরীরে উপস্থিত হয়ে কোভিড-১৯ টিকা গ্রহণ করবেন।"
+        />
+        <meta property="og:image" content="assets/images/share_banner.png" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://surokkha.gov.bd" />
+        <meta property="twitter:title" content="সুরক্ষা : কোভিড-১৯ ভ্যাকসিনের জন্য নিবন্ধন করুন" />
+        <meta
+            property="twitter:description"
+            content="এই পোর্টালের মাধ্যমে জাতীয় পরিচয়পত্র ও সঠিক মোবাইল নম্বর যাচাইপূর্বক অনলাইনে নিবন্ধন সম্পন্ন করবেন। অনলাইনে নিবন্ধন পরবর্তী তথ্য যাচাইপূর্বক পর্যায়ক্রমে টিকা প্রদানের তারিখ ও কেন্দ্রের নাম উল্লেখপূর্বক মুঠোফোনে খুদেবার্তা পাবেন।মুঠোফোনে খুদেবার্তা প্রাপ্তি সাপেক্ষে টিকাকার্ড জাতীয় পরিচয়পত্র ও সম্মতিপত্রসহ নির্দিষ্ট তারিখে টিকাদান কেন্দ্রে স্ব-শরীরে উপস্থিত হয়ে কোভিড-১৯ টিকা গ্রহণ করবেন।"
+        />
+        <meta property="twitter:image" content="/assets/images/share_banner.png" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
+        <link rel="manifest" href="/manifest.json" />
+        <style media="print">
+            .no-print {
+                display: none !important;
+            }
+        </style>
+        <link href="{{asset('frontend')}}/static/css/2.61833881.chunk.css" rel="stylesheet" />
+        <link href="{{asset('frontend')}}/static/css/main.a9d26002.chunk.css" rel="stylesheet" />
+        <link href="{{asset('frontend')}}/static/css/main.css" rel="stylesheet" />
+        <link href="https://fonts.maateen.me/solaiman-lipi/font.css" rel="stylesheet">
+        <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-X6Q20VXR5J"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", "G-X6Q20VXR5J");
+        </script>
+        <style type="text/css">
+           
+        </style>
+        <style type="text/css">
+            .App__app-rate-root_3Pwj8aCO[data-v-eefced42] {
+                width: 100vw;
+                height: 100vh;
+                position: fixed;
+                z-index: 9999999999;
+                background: rgba(0, 0, 0, 0.151);
+                top: 0px;
+                left: 0px;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .App__app-rate-root_3Pwj8aCO *[data-v-eefced42] {
+                all: initial;
+                line-height: normal;
+                font-family: "Didact Gothic";
+            }
+            .App__app-rate-root_3Pwj8aCO .App__modal_3oqzjl0g[data-v-eefced42] {
+                width: 630px;
+                height: 450px;
+                display: flex;
+                position: relative;
+                flex-direction: column;
+                align-items: center;
+                background-size: cover;
+                transition: 0.2s ease;
+                transform: scale(0.8);
+                opacity: 0;
+                padding-top: 30px;
+                box-sizing: border-box;
+                overflow: hidden;
+                border-radius: 60px;
+            }
+            .App__app-rate-root_3Pwj8aCO .App__modal_3oqzjl0g .App__logo_26yDc693[data-v-eefced42] {
+                width: 190px;
+                height: auto;
+                box-shadow: 0px 6px 17px -10px rgba(0, 0, 0, 0.55);
+                border-radius: 50%;
+            }
+            .App__app-rate-root_3Pwj8aCO .App__modal_3oqzjl0g .App__title_3Yf-v9xs[data-v-eefced42] {
+                margin-top: 10px;
+                font-size: 46px;
+                font-weight: normal;
+                color: #259cfe;
+                font-family: "Fredoka One";
+            }
+            .App__app-rate-root_3Pwj8aCO .App__modal_3oqzjl0g .App__subtitle_26MV5W4h[data-v-eefced42] {
+                margin-top: 10px;
+                font-size: 22px;
+                color: white;
+            }
+            .App__app-rate-root_3Pwj8aCO .App__modal_3oqzjl0g .App__benefits_14oMPuu1[data-v-eefced42] {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 35px;
+                margin-left: 4px;
+            }
+            .App__app-rate-root_3Pwj8aCO .App__modal_3oqzjl0g .App__benefits_14oMPuu1 .App__item_3sI_Wrxz[data-v-eefced42] {
+                display: flex;
+                align-items: center;
+                margin: 6px 12px;
+                font-size: 14px;
+                color: black;
+            }
+            .App__app-rate-root_3Pwj8aCO .App__modal_3oqzjl0g .App__benefits_14oMPuu1 .App__item_3sI_Wrxz img[data-v-eefced42] {
+                margin-right: 10px;
+                margin-bottom: -1px;
+                width: 14px;
+                height: auto;
+            }
+            .App__app-rate-root_3Pwj8aCO .App__modal_3oqzjl0g .App__rate-btn_2bjgK090[data-v-eefced42] {
+                all: initial;
+                margin-top: 22px;
+                font-size: 18px;
+                color: white;
+                width: 170px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #ff8d4f;
+                border-bottom: 3px solid #d48357;
+                border-radius: 10px;
+                padding: 13px 20px;
+                box-sizing: border-box;
+                font-family: "Didact Gothic";
+                cursor: pointer;
+            }
+        </style>
         
-        <!--Preloader area start here-->
-        <div id="loader" class="loader">
-            <div class="loader-container"></div>
-        </div>
-        <!--Preloader area End here--> 
-     
-		<!-- Main content Start -->
-        <div class="main-content">
-            
-            <!--Full width header Start-->
-            <div class="full-width-header">
-                <!--Header Start-->
-                @if (Request::is('/*'))
-                    @include('frontend.partials.front-header')
-                    @else
-                    @include('frontend.partials.header')
-                @endif
-                
-                <!--Header End-->
-                <!-- Canvas Menu start -->
-                <nav class="right_menu_togle hidden-md">
-                    <div class="close-btn"><span id="nav-close" class="text-center"><i class="fa fa-close"></i></span></div>
-                    <div class="canvas-logo">
-                        <a href="index.html"><img src="{{asset('frontend')}}/assets/images/logo-dark.png" alt="logo"></a>
-                    </div>
-                    <div class="offcanvas-text">
-                        <p>Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English.</p>
-                    </div>
-                    <div class="canvas-contact">
-                        <h5 class="canvas-contact-title">Contact Info</h5>
-                        <ul class="contact">
-                            <li><i class="fa fa-globe"></i>Middle Badda, Dhaka, BD</li>
-                            <li><i class="fa fa-phone"></i>+123445789</li>
-                            <li><i class="fa fa-envelope"></i><a href="mailto:info@yourcompany.com">info@yourcompany.com</a></li>
-                            <li><i class="fa fa-clock-o"></i>10:00 AM - 11:30 PM</li>
-                        </ul>
-                        <ul class="social">
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        </ul>
+    </head>
+    <body id="bodyStyles" class="bodyStyles" cz-shortcut-listen="true">
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root">
+            <header class="su-h-header">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container">
+                        <a class="navbar-brand main-logo" href="/"><img class="img-fluid" src="{{asset('frontend')}}/static/media/logo-f.5c608b98.png" alt="Surokkha" width="" /></a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav3" aria-controls="navbarNav3" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                        <div class="collapse navbar-collapse" id="navbarNav3">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link @yield('homepage')" href="/">হোম<span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link" href="/enroll">নিবন্ধন</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/vaccine-card">টিকা কার্ড</a></li>
+                                <li class="nav-item"><a class="nav-link @yield('certificate')" href="/certificate">টিকা সনদ</a></li>
+                                <li class="nav-item"><a class="nav-link @yield('verify')" href="/verify">টিকা সনদ যাচাই</a></li>
+                            </ul>
+                            <a href="javascript:void(0)" class="nav-link btn ml-lg-2 su-lang-btn">English</a>
+                        </div>
                     </div>
                 </nav>
-                <!-- Canvas Menu end -->
-            </div>
-            <!--Full width header End-->
-         
-           @yield('content')
-
-        </div> 
-        <!-- Main content End -->
-     
-        <!-- Footer Start -->
-        @include('frontend.partials.footer')
-        <!-- Footer End -->
-
-        <!-- start scrollUp  -->
-        <div id="scrollUp" class="orange-color">
-            <i class="fa fa-angle-up"></i>
+            </header>
         </div>
-        <!-- End scrollUp  -->
-
-        <!-- Search Modal Start -->
-        <div aria-hidden="true" class="modal fade search-modal" role="dialog" tabindex="-1">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span class="flaticon-cross"></span>
-            </button>
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="search-block clearfix">
-                        <form>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Search Here..." type="text">
-                            </div>
-                        </form>
+        @yield('content')
+        
+        <!---->
+        <footer class="su-main-footer-area no-print">
+            <div class="container mt-5">
+                <div class="row text-left">
+                    <div class="col-12 col-md-2 su-footer-logo mb-3"><img src="{{asset('frontend')}}/static/media/logo_white.8ef9a1c4.svg" alt="Surokkha" /></div>
+                    <div class="col-12 col-md-2">
+                        <ul class="list-footer text-small mb-5">
+                            <li><a class="footer-link" href="/faq">জিজ্ঞাসা</a></li>
+                            <li><a class="footer-link" href="/help">সহায়িকা</a></li>
+                            <li><a class="footer-link" href="/privacy-policy">প্রাইভেসি পলিসি</a></li>
+                            <li><a class="footer-link" href="/terms-of-service">টার্মস অফ সার্ভিসেস</a></li>
+                            <li><a class="footer-link" href="/affiliates">অন্যান্য সহযোগী প্রতিষ্ঠানসমূহ</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-md-4 su-footer-l-col">
+                        <p>কারিগরি সহায়তায় - তথ্য ও যোগাযোগ প্রযুক্তি অধিদপ্তর &nbsp;</p>
+                        <img alt="" class="img-fluid" src="{{asset('frontend')}}/static/media/ict.52410752.png" />
+                    </div>
+                    <div class="col-12 col-md-4 pt-5 pt-md-0 su-footer-r-col">
+                        <p>সহযোগী সংস্থাসমূহ -&nbsp;</p>
+                        <img alt="" class="img-fluid" src="{{asset('frontend')}}/static/media/org.ed08c793.png" />
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Search Modal End -->
+        </footer>
 
-         <!-- modernizr js -->
-        <script src="{{asset('frontend')}}/assets/js/modernizr-2.8.3.min.js"></script>
-        <!-- jquery latest version -->
-        <script src="{{asset('frontend')}}/assets/js/jquery.min.js"></script>
-        <!-- Bootstrap v4.4.1 js -->
-        <script src="{{asset('frontend')}}/assets/js/bootstrap.min.js"></script>
-        <!-- Menu js -->
-        <script src="{{asset('frontend')}}/assets/js/rsmenu-main.js"></script> 
-        <!-- op nav js -->
-        <script src="{{asset('frontend')}}/assets/js/jquery.nav.js"></script>
-        <!-- owl.carousel js -->
-        <script src="{{asset('frontend')}}/assets/js/owl.carousel.min.js"></script>
-        <!-- wow js -->
-        <script src="{{asset('frontend')}}/assets/js/wow.min.js"></script>
-        <!-- Skill bar js -->
-        <script src="{{asset('frontend')}}/assets/js/skill.bars.jquery.js"></script>
-        <script src="{{asset('frontend')}}/assets/js/jquery.counterup.min.js"></script> 
-         <!-- counter top js -->
-        <script src="{{asset('frontend')}}/assets/js/waypoints.min.js"></script>
-        <!-- swiper js -->
-        <script src="{{asset('frontend')}}/assets/js/swiper.min.js"></script>   
-        <!-- particles js -->
-        <script src="{{asset('frontend')}}/assets/js/particles.min.js"></script>  
-        <!-- magnific popup js -->
-        <script src="{{asset('frontend')}}/assets/js/jquery.magnific-popup.min.js"></script>      
-        <!-- plugins js -->
-        <script src="{{asset('frontend')}}/assets/js/plugins.js"></script>
-        <!-- pointer js -->
-        <script src="{{asset('frontend')}}/assets/js/pointer.js"></script>
-        <!-- contact form js -->
-        <script src="{{asset('frontend')}}/assets/js/contact.form.js"></script>
-        <!-- ScrollIt js -->
-        <script src="{{asset('frontend')}}/assets/js/scrollIt.min.js"></script>
-        <!-- main js -->
-        <script src="{{asset('frontend')}}/assets/js/main.js"></script>
-        {{-- <script type='text/javascript'> 
-            document.addEventListener('contextmenu', event => event.preventDefault()); 
-            document.onkeydown = function(e) {
-            var message='Content is protected\nYou cannot view the page.';
-            if (e.ctrlKey &&
-            (e.keyCode === 67 ||
-            e.keyCode === 86 ||
-            e.keyCode === 85 ||
-            e.keyCode === 117)) {
-            alert(message);
-            return false;
-            } else {
-            return true;
+    <script src="{{asset('frontend')}}/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="{{asset('frontend')}}/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="{{asset('frontend')}}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>!function(e){function r(r){for(var n,l,a=r[0],f=r[1],i=r[2],c=0,s=[];c<a.length;c++)l=a[c],Object.prototype.hasOwnProperty.call(o,l)&&o[l]&&s.push(o[l][0]),o[l]=0;for(n in f)Object.prototype.hasOwnProperty.call(f,n)&&(e[n]=f[n]);for(p&&p(r);s.length;)s.shift()();return u.push.apply(u,i||[]),t()}function t(){for(var e,r=0;r<u.length;r++){for(var t=u[r],n=!0,a=1;a<t.length;a++){var f=t[a];0!==o[f]&&(n=!1)}n&&(u.splice(r--,1),e=l(l.s=t[0]))}return e}var n={},o={1:0},u=[];function l(r){if(n[r])return n[r].exports;var t=n[r]={i:r,l:!1,exports:{}};return e[r].call(t.exports,t,t.exports,l),t.l=!0,t.exports}l.m=e,l.c=n,l.d=function(e,r,t){l.o(e,r)||Object.defineProperty(e,r,{enumerable:!0,get:t})},l.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},l.t=function(e,r){if(1&r&&(e=l(e)),8&r)return e;if(4&r&&"object"==typeof e&&e&&e.__esModule)return e;var t=Object.create(null);if(l.r(t),Object.defineProperty(t,"default",{enumerable:!0,value:e}),2&r&&"string"!=typeof e)for(var n in e)l.d(t,n,function(r){return e[r]}.bind(null,n));return t},l.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return l.d(r,"a",r),r},l.o=function(e,r){return Object.prototype.hasOwnProperty.call(e,r)},l.p="/";var a=this.webpackJsonpsurokkha=this.webpackJsonpsurokkha||[],f=a.push.bind(a);a.push=r,a=a.slice();for(var i=0;i<a.length;i++)r(a[i]);var p=f;t()}([])</script>
+    <script src="{{asset('frontend')}}/static/js/2.f7587570.chunk.js"></script>
+    <script src="{{asset('frontend')}}/static/js/main.b094243e.chunk.js"></script>
+    <script>
+        @media print {
+            .no-print{
+                display:none;
             }
-            };
-            $(document).keypress('u',function(e) {
-            if(e.ctrlKey){
-            return false;
-            }
-            else{
-                return true;
-                }
-            });
-        </script> --}}
-
-        @yield('scripts')
+        }
+    </script>
+    @yield('scripts')
     </body>
 </html>

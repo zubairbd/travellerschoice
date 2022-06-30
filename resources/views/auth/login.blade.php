@@ -1,4 +1,4 @@
-@extends('layouts.frontend-master')
+@extends('layouts.auth-master')
 
 @section('content')
 <div class="rs-my-account pt-110 pb-120 md-pt-60 md-pb-80">

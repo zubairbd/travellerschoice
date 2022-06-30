@@ -30,9 +30,7 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer('*', function ($view)
         {
-            $auth = Auth::user();
-            $setting = Setting::whereId(1)->first();
-            $view->with(['auth' => $auth, 'setting' => $setting,]);
+           
         });
     }
 }

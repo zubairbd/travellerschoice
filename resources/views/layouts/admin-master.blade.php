@@ -8,19 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Travellers Choice - @yield('title', 'Travel Destination Management')</title>
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset('frontend')}}/assets/images/favicon.png">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title> Surokkha - @yield('title', 'Surokkha')</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('backend')}}/assets/images/favicon.png">
     <!-- Custom fonts for this template-->
-    <link href="{{asset('admin')}}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="{{asset('backend')}}/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    {{-- <link href="{{asset('admin')}}/css/bootstrap.min.css" rel="stylesheet"> --}}
-    <link href="{{asset('admin')}}/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="{{asset('admin')}}/css/custom.css" rel="stylesheet">
+    <link href="{{asset('backend')}}/assets/css/sb-admin-pro.css" rel="stylesheet">
+    <link href="{{asset('backend')}}/assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="{{asset('backend')}}/assets/css/custom-agent.css" rel="stylesheet">
     @yield('styles')
     <style>
          .sidebar-brand-text.mx-3 img {
@@ -58,7 +58,7 @@
 
         .btn-group-sm > .btn, .btn-xs {
             padding: 0.01rem .2rem;
-            font-size: 12px;
+            font-size: .875rem;
             line-height: 1.5;
             border-radius: .2rem;
         }
@@ -68,16 +68,29 @@
         .form-control{
             color: #010204;
         }
-        .form-group
-        label {
-            color: #010204;
-        }
+        
         .sidebar-logo-vertical {
             display: none;
         }
         .sidebar-logo-vertical img {
             width: 90px;
             
+        }
+        .card {
+            margin: 20px;
+        }
+        .sidebar .nav-item .nav-link .img-profile, .topbar .nav-item .nav-link .img-profile {
+            height: 2rem;
+            width: 2rem;
+            border: 1px solid #ddd;
+        }
+
+        .custom-select {
+            color: #000;
+        }
+        .form-group label {
+            color: #300f8c;
+            font-size: 14px;
         }
     </style>
 
@@ -99,7 +112,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-s4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -116,7 +129,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 medium">Wallets: <b>{{walletBalance()}}</b></span>
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 medium">Wallets: <b></b></span>
                             
                         </a>
                         </li>
@@ -129,13 +142,18 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Auth::user()->name}}</span>
-                                <img class="img-profile rounded-circle"
-                                    src="https://source.unsplash.com/random/150x150?person">
+                                {{-- <img class="img-profile rounded-circle"
+                                    src="{{asset('frontend')}}/assets/img/undraw_profile.svg"> --}}
+                                     
+                                    @if (auth()->user()->photo !== null)
+                                        <img class="img-profile rounded-circle" src="http://i.pravatar.cc/500?img=7">
+                                        
+                                    @endif
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -212,21 +230,22 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{asset('admin')}}/vendor/jquery/jquery.min.js"></script>
-    <script src="{{asset('admin')}}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{asset('backend')}}/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="{{asset('backend')}}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="{{asset('admin')}}/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="{{asset('backend')}}/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="{{asset('admin')}}/js/sb-admin-2.min.js"></script>
+    <script src="{{asset('backend')}}/assets/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    {{-- <script src="{{asset('admin')}}/vendor/chart.js/Chart.min.js"></script> --}}
+    <script src="{{asset('backend')}}/assets/vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    {{-- <script src="{{asset('admin')}}/js/demo/chart-area-demo.js"></script>
-    <script src="{{asset('admin')}}/js/demo/chart-pie-demo.js"></script> --}}
+    <script src="{{asset('backend')}}/assets/js/demo/chart-area-demo.js"></script>
+
+    <script src="{{asset('backend')}}/assets/js/custom-agent.js"></script>
 
     @yield('scripts')
     <script>
